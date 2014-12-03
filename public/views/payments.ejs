@@ -25,7 +25,7 @@
                         <tr ng-repeat="pm in payment.payments">
                             <td>{{ pm.fromUser.firstname }}</td>
                             <td>{{ pm.toUser.firstname }}</td>
-                            <td>{{ pm.amount }}</td>
+                            <td>{{ pm.amount | currency:pm.currency.name:2 }}</td>
                         </tr>
                     </tbody>
                 </table>
