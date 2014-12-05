@@ -7,10 +7,15 @@
 
     function LoginCtrl(Auth) {
         var vm = this;
-        vm.test = 'Hello Login!';
 
-        vm.authenticate = function() {
-        	Auth.authenticate('asdf', 'asdf');
+        vm.credentials = {
+        	email: '',
+        	password: '',
+        	remember: false
+        };
+
+        vm.login = function() {
+        	Auth.login(vm.credentials);
         };
     }
 

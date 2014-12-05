@@ -7,15 +7,25 @@
 
 	function Auth() {
 		var service = {
-			'authenticate': authenticate
+			'login': login,
+			'logout': logout,
+			'isAuthenticated': isAuthenticated
 		};
 
 		return service;
 
 		////////////////////////
 
-		function authenticate(username, password) {
-			console.log('authenticate');
+		function login(credentials) {
+			console.log('login');
+		}
+
+		function logout() {
+			console.log('logout');
+		}
+
+		function isAuthenticated() {
+			return false;
 		}
 	}
 })();

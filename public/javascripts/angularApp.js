@@ -5,6 +5,9 @@
         .module('app', [
             'app.core',
 
+            // Parts
+            'app.header',
+
             // Features
             'app.login',
             'app.user',
@@ -13,7 +16,7 @@
         ])
         .config(baseConfig);
 
-    function baseConfig($urlRouterProvider, $stateProvider) {
+    function baseConfig($urlRouterProvider, $stateProvider, $logProvider) {
         $urlRouterProvider.otherwise("/home");
 
         $stateProvider.state('home', {
@@ -21,5 +24,7 @@
             templateUrl: 'views/home.ejs',
             controller: 'MainCtrl as main'
         });
+
+        $logProvider.debugEnabled(true);
     }
 })();

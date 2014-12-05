@@ -27,7 +27,8 @@ module.exports = function(grunt) {
           'public/javascripts/dist/main.js': [ 'public/javascripts/angularApp.js', 'public/javascripts/angular-core.js', 'public/javascripts/app.controller.js' ],
           'public/javascripts/dist/modules.js': [ 'public/javascripts/components/**/*.module.js' ],
           'public/javascripts/dist/controllers.js': [ 'public/javascripts/components/**/*.controller.js' ],
-          'public/javascripts/dist/services.js': [ 'public/javascripts/components/**/*.service.js' ]
+          'public/javascripts/dist/services.js': [ 'public/javascripts/components/**/*.service.js' ],
+          'public/javascripts/dist/directives.js': [ 'public/javascripts/components/**/*.directive.js' ]
         }
       }
     },
