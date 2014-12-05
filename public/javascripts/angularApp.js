@@ -7,6 +7,8 @@
 
             // Features
             'app.login',
+            'app.user',
+            'app.friends',
             'app.payments'
         ])
         .config(baseConfig);
