@@ -1,7 +1,11 @@
 var mongoose = require('mongoose');
 
 var CurrencySchema = new mongoose.Schema({
-    name: String
+    name: {
+    	type: String,
+    	unique: true,
+    	required: true
+    }
 });
 
-mongoose.model('Currency', CurrencySchema);
+module.exports = mongoose.model('Currency', CurrencySchema);

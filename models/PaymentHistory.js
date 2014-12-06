@@ -9,4 +9,4 @@ var PaymentHistorySchema = new mongoose.Schema({
     }]
 });
 
-mongoose.model('PaymentHistory', PaymentHistorySchema);
+module.exports = mongoose.model('PaymentHistory', PaymentHistorySchema);

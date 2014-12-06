@@ -4,12 +4,24 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var passport = require('passport');
+var debug = require('debug')('billwilly');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var auth = require('./routes/authentication');
 
 var app = express();
+
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/billwilly');
+
+// initiliazes the database
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function callback () {
+  debug('Successfully connected to database ...');
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -22,8 +34,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());
 
-app.use('/', auth);
+app.use('/auth', auth);
 app.use('/', routes);
 app.use('/users', users);
 
