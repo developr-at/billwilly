@@ -9,7 +9,8 @@
 		var service = {
 			'login': login,
 			'logout': logout,
-			'isAuthenticated': isAuthenticated
+			'isAuthenticated': isAuthenticated,
+			'getCurrentUser': getCurrentUser
 		};
 
 		return service;
@@ -26,6 +27,14 @@
 
 		function isAuthenticated() {
 			return false;
+		}
+
+		function getCurrentUser() {
+			return {
+				'id': 0,
+				'firstname': 'Demo',
+				'lastname': 'User'
+			};
 		}
 	}
 })();

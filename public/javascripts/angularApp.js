@@ -16,7 +16,7 @@
         ])
         .config(baseConfig);
 
-    function baseConfig($urlRouterProvider, $stateProvider, $logProvider) {
+    function baseConfig($urlRouterProvider, $stateProvider, $logProvider, $locationProvider) {
         $urlRouterProvider.otherwise("/home");
 
         $stateProvider.state('home', {
@@ -26,5 +26,6 @@
         });
 
         $logProvider.debugEnabled(true);
+        $locationProvider.html5Mode(true);
     }
 })();
