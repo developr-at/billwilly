@@ -1,4 +1,5 @@
 var express = require('express');
+var session = require('express-session');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -14,6 +15,7 @@ var auth = require('./routes/authentication');
 var app = express();
 
 var mongoose = require('mongoose');
+var dbInit = require('./init/db');
 mongoose.connect('mongodb://localhost/billwilly');
 
 // initiliazes the database
@@ -21,6 +23,7 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback () {
   debug('Successfully connected to database ...');
+  dbInit.init();
 });
 
 // view engine setup
@@ -34,7 +37,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({ 
+    secret: '14d3efffa613d1b36ac20d9f9f32c48a',
+    resave: false,
+    saveUninitialized: true
+}));
 app.use(passport.initialize());
+app.use(passport.session());
+
 
 app.use('/auth', auth);
 app.use('/', routes);

@@ -5,7 +5,7 @@
         .module('app.login')
         .controller('LoginCtrl', LoginCtrl);
 
-    function LoginCtrl(Auth) {
+    function LoginCtrl($scope, Auth) {
         var vm = this;
 
         vm.credentials = {
@@ -15,9 +15,19 @@
         };
 
         vm.login = function() {
-        	Auth.login(vm.credentials);
+        	Auth.login(vm.credentials, function(err, user) {
+                $scope.message = null;
+                if (err) {
+                    $scope.message = err;
+                }
+                console.log(user);
+            });
+        };
+
+        vm.currentUser = function() {
+            return Auth.currentUser;
         };
     }
 
-    LoginCtrl.$inject = ["Auth"];
+    LoginCtrl.$inject = ['$scope', 'Auth'];
 })();

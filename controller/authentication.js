@@ -1,19 +1,19 @@
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var User = require('../models/user');
+var User = require('../models/User');
 
 passport.use(new LocalStrategy({
     usernameField: 'email',
     passwordField: 'password'
   },
-	function(username, password, callback) {
-  	User.findOne({ username: username }, function (err, user) {
+	function(email, password, callback) {
+  	User.findOne({ email: email }, function (err, user) {
     		if (err) { 
     			return callback(err); 
     		}
 
-    		// No user found with that username
-    		if (!user) { 
+    		// No user found with that email
+    		if (!user) {
     			return callback(null, false);
     		}
 
@@ -35,11 +35,34 @@ passport.use(new LocalStrategy({
 	}
 ));
 
-exports.isAuthenticated = function(req, res) {
-	return passport.authenticate('local', { session : true })(req, res);
+passport.serializeUser(function(user, done) {
+  done(null, user.id.toString());
+});
+
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
+});
+
+exports.isAuthenticated = function(req, res, next) {
+	return passport.authenticate('local', { 
+    successRedirect: '/auth/user',
+    session : true 
+  })(req, res, next);
 };
 
-exports.logout = function(req, res) {
+exports.user = function(req, res, next) {
+  //res.writeHead(200, {"Content-Type": "application/json"});
+  console.log(req.user);
+  res.end(JSON.stringify({
+    status: 'sucess',
+    message: null,
+    user: req.user
+  }));
+};
+
+exports.logout = function(req, res, next) {
   req.logout();
   res.redirect('/');
 };
