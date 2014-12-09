@@ -37,7 +37,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({ 
+app.use(session({
     secret: '14d3efffa613d1b36ac20d9f9f32c48a',
     resave: false,
     saveUninitialized: true

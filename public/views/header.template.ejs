@@ -13,7 +13,16 @@
             <ul class="nav navbar-nav">
                 <li><a ui-sref="payments">Payments</a></li>
                 <li><a ui-sref="friends">Friends</a></li>
-                <bw-login-menu-entry/>
+                <li ng-show="header.isAuthenticated()" class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ header.currentUser.email }}<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a ui-sref="profile">Profile</a></li>
+                        <li><a href="#">Logout</a></li>
+                    </ul>
+                </li>
+                <li ng-hide="header.isAuthenticated()">
+                    <a ui-sref="login">Login</a>
+                </li>
             </ul>
         </div>
     </div>
