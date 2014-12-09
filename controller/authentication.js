@@ -9,23 +9,23 @@ passport.use(new LocalStrategy({
 	function(email, password, callback) {
   	User.findOne({ email: email }, function (err, user) {
     		if (err) { 
-    			return callback(err); 
+    			return callback(err, false, { message: err }); 
     		}
 
     		// No user found with that email
     		if (!user) {
-    			return callback(null, false);
+    			return callback(null, false, { message: 'Invalid credentials' });
     		}
 
     		// Make sure the password is correct
     		user.verifyPassword(password, function(err, isMatch) {
       		if (err) { 
-      			return callback(err); 
+      			return callback(err, false, { message: err }); 
       		}
 
       		// Password did not match
       		if (!isMatch) { 
-      			return callback(null, false); 
+      			return callback(null, false, { message: 'Invalid credentials' }); 
       		}
 
       		// Success
@@ -46,20 +46,32 @@ passport.deserializeUser(function(id, done) {
 });
 
 exports.isAuthenticated = function(req, res, next) {
-	return passport.authenticate('local', { 
-    successRedirect: '/auth/user',
-    session : true 
-  })(req, res, next);
-};
+	return passport.authenticate('local', function(err, user, info) {
+      if (err) { 
+        return next(err); 
+      }
 
-exports.user = function(req, res, next) {
-  //res.writeHead(200, {"Content-Type": "application/json"});
-  console.log(req.user);
-  res.end(JSON.stringify({
-    status: 'sucess',
-    message: null,
-    user: req.user
-  }));
+      res.writeHead(200, {"Content-Type": "application/json"});
+      if (!user) {
+        res.statusCode = 401;
+        return res.end(JSON.stringify({
+          status: 'error',
+          message: err || info.message,
+          user: null
+        }));
+      }
+      req.logIn(user, function(err) {
+        if (err) { 
+          return next(err); 
+        }
+        return res.end(JSON.stringify({
+          status: 'sucess',
+          message: null,
+          user: req.user
+        }));
+      });
+    }
+  )(req, res, next);
 };
 
 exports.logout = function(req, res, next) {

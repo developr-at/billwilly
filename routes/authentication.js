@@ -9,7 +9,4 @@ router.route('/authenticate')
 router.route('/release')
 	.get(authenticationController.logout);
 
-router.route('/user')
-	.get(authenticationController.user);
-
 module.exports = router;
