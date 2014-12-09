@@ -51,24 +51,20 @@ exports.isAuthenticated = function(req, res, next) {
         return next(err); 
       }
 
-      res.writeHead(200, {"Content-Type": "application/json"});
       if (!user) {
-        res.statusCode = 401;
-        return res.end(JSON.stringify({
-          status: 'error',
+        return res.status(401).json({
           message: err || info.message,
           user: null
-        }));
+        });
       }
       req.logIn(user, function(err) {
         if (err) { 
           return next(err); 
         }
-        return res.end(JSON.stringify({
-          status: 'sucess',
+        return res.json({
           message: null,
           user: req.user
-        }));
+        });
       });
     }
   )(req, res, next);
