@@ -10,9 +10,11 @@
             <a class="navbar-brand" href="#">BillWilly</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav navbar-left">
                 <li><a ui-sref="payments">Payments</a></li>
                 <li><a ui-sref="friends">Friends</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
                 <li ng-show="header.isAuthenticated()" class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ header.currentUser.email }}<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
@@ -22,6 +24,8 @@
                 </li>
                 <li ng-hide="header.isAuthenticated()">
                     <a ui-sref="login">Login</a>
+                <li ng-hide="header.isAuthenticated()">
+                    <a ui-sref="register">Register</a>
                 </li>
             </ul>
         </div>

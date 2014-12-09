@@ -45,5 +45,5 @@
         };
     }
 
-    LoginCtrl.$inject = ['$scope', 'Auth'];
+    LoginCtrl.$inject = ['Auth'];
 })();

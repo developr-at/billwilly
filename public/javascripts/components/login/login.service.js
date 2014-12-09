@@ -5,7 +5,7 @@
         .module('app.login')
         .factory('Auth', Auth);
 
-    function Auth($http) {
+    function Auth($http, API_BASE_PATH) {
         var service = {
             'login': login,
             'register': register,
@@ -20,18 +20,18 @@
 
         function login(credentials, callback) {
             /*jshint validthis:true */
-            var authentication = $http.post("/auth/authenticate", credentials);
+            var authentication = $http.post(/*API_BASE_PATH + */'auth/authenticate', credentials);
             authentication.success(function(data, status, headers, config) {
                 service.currentUser = data.user;
                 callback(null, data.user);
             });
             authentication.error(function(data, status, headers, config) {
-                callback('Invalid credentials', null);
+                callback(data.message, null);
             });
         }
 
         function register(registration, callback) {
-            
+
         }
 
         function logout() {
@@ -42,4 +42,6 @@
             return !!service.currentUser._id;
         }
     }
+
+    Auth.$inject = [ '$http', 'API_BASE_PATH' ];
 })();

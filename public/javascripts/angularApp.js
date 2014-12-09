@@ -14,7 +14,8 @@
             'app.friends',
             'app.payments'
         ])
-        .config(baseConfig);
+        .config(baseConfig)
+        .constant('API_BASE_PATH', '/api/v1/');
 
     function baseConfig($urlRouterProvider, $stateProvider, $logProvider, $locationProvider) {
         $urlRouterProvider.otherwise("/home");
