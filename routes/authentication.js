@@ -1,18 +1,15 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
+var authenticationController = require('../controller/authentication.js');
 
-router.post('/login',
-  	passport.authenticate('local', { 
-  		successRedirect: '/payments',
-    	failureRedirect: '/login',
-        failureFlash: true 
-    })
-);
+router.route('/authenticate')
+	.post(authenticationController.isAuthenticated);
 
-router.get('/logout', function(req, res){
-  	req.logout();
-  	res.redirect('/');
-});
+router.route('/release')
+	.get(authenticationController.logout);
+
+router.route('/user')
+	.get(authenticationController.user);
 
 module.exports = router;

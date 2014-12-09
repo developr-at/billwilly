@@ -5,20 +5,29 @@
         .module('app.login')
 		.factory('Auth', Auth);
 
-	function Auth() {
+	function Auth($http) {
 		var service = {
 			'login': login,
 			'logout': logout,
 			'isAuthenticated': isAuthenticated,
-			'getCurrentUser': getCurrentUser
+			'currentUser': null
 		};
 
 		return service;
 
 		////////////////////////
 
-		function login(credentials) {
-			console.log('login');
+		function login(credentials, callback) {
+			/*jshint validthis:true */
+			var vm = this;
+			var authentication = $http.post("/auth/authenticate", credentials);
+            authentication.success(function(data, status, headers, config) {
+                vm.user = data.user;
+                callback(null, data.user);
+            });
+            authentication.error(function(data, status, headers, config) {
+                callback('Invalid credentials', null);
+            });
 		}
 
 		function logout() {
@@ -27,14 +36,6 @@
 
 		function isAuthenticated() {
 			return false;
-		}
-
-		function getCurrentUser() {
-			return {
-				'id': 0,
-				'firstname': 'Demo',
-				'lastname': 'User'
-			};
 		}
 	}
 })();

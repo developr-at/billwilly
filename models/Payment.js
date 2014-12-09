@@ -19,4 +19,4 @@ var PaymentSchema = new mongoose.Schema({
     history: [{ type: mongoose.Schema.Types.ObjectId, ref: 'PaymentHistory' }]
 });
 
-mongoose.model('Payment', PaymentSchema);
+module.exports = mongoose.model('Payment', PaymentSchema);
