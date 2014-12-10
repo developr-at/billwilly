@@ -36,6 +36,7 @@
 
         function logout() {
             service.currentUser = { _id: false };
+            $http.post(/*API_BASE_PATH + */'auth/release');
         }
 
         function isAuthenticated() {

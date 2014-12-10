@@ -9,13 +9,15 @@
         $stateProvider.state('login', {
             url: '/login',
             templateUrl: 'views/login.ejs',
-            controller: 'LoginCtrl as login'
+            controller: 'LoginCtrl as login',
+            restricted: false
         });
 
         $stateProvider.state('register', {
             url: '/register',
             templateUrl: 'views/register.ejs',
-            controller: 'LoginCtrl as login'
+            controller: 'LoginCtrl as login',
+            restricted: false
         });
     }
 
