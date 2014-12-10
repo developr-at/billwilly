@@ -20,6 +20,11 @@ var UserSchema = new mongoose.Schema({
     admin: Boolean,
     deleted: Boolean,
 
+    friends: [{
+        type: Schema.ObjectId,
+        ref: 'User'
+    }],
+
     lastLogin: { type: Date, default: Date.now },
     updated: { type: Date, default: Date.now },
     created: { type: Date, default: Date.now }
