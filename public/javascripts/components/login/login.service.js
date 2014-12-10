@@ -31,7 +31,22 @@
         }
 
         function register(registration, callback) {
-
+            // @TODO: Don't send plain password
+            var registrationAction = $http.post(/* API_BASE_PATH + */'users/register', registration);
+            registrationAction.success(function(data, status, headers, config) {
+                console.log("success");
+                console.log(data);
+                console.log(status);
+                console.log(headers);
+                console.log(config);
+            });
+            registrationAction.error(function(data, status, headers, config) {
+                console.log("error");
+                console.log(data);
+                console.log(status);
+                console.log(headers);
+                console.log(config);
+            });
         }
 
         function logout() {

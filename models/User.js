@@ -21,7 +21,7 @@ var UserSchema = new mongoose.Schema({
     deleted: Boolean,
 
     friends: [{
-        type: Schema.ObjectId,
+        type: mongoose.Schema.ObjectId,
         ref: 'User'
     }],
 

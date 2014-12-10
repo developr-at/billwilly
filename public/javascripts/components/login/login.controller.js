@@ -15,6 +15,8 @@
         };
 
         vm.registration = {
+            firstname: '',
+            lastname: '',
             email: '',
             firstPassword: '',
             secondPassword: ''
