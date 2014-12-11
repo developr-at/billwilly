@@ -11,7 +11,8 @@
             'register': register,
             'logout': logout,
             'isAuthenticated': isAuthenticated,
-            'currentUser': { _id: false }
+            'currentUser': { _id: false },
+            'getCurrentUser': getCurrentUser
         };
 
         return service;
@@ -55,7 +56,12 @@
         }
 
         function isAuthenticated() {
+            console.log("isAuthenticated");
             return !!service.currentUser._id;
+        }
+
+        function getCurrentUser() {
+            return service.currentUser;
         }
     }
 

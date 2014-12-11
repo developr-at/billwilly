@@ -16,10 +16,10 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li ng-show="header.isAuthenticated()" class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ header.currentUser.email }}<span class="caret"></span></a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ header.getCurrentUser().email }}<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a ui-sref="profile">Profile</a></li>
-                        <li><a href="#">Logout</a></li>
+                        <li><a href="#" ng-click="header.logout()">Logout</a></li>
                     </ul>
                 </li>
                 <li ng-hide="header.isAuthenticated()">
