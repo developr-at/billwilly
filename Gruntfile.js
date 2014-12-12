@@ -45,13 +45,32 @@ grunt.initConfig({
                 }
             },
         },
-    });
 
+        nodemon: {
+            dev: {
+                script: './bin/www',
+                options: {
+                    nodeArgs: ['--debug'],
+                    ignore: ['node_modules/**', 'public/**'],
+                }
+            }
+        },
+
+        concurrent: {
+            options: {
+                logConcurrentOutput: true
+            },
+
+            tasks: ['nodemon', 'watch']
+        }
+    });
 
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-bower-task');
+    grunt.loadNpmTasks('grunt-nodemon');
+    grunt.loadNpmTasks('grunt-concurrent');
 
-    grunt.registerTask('dev', [ 'bower', 'watch:dev' ]);
+    grunt.registerTask('dev', [ 'bower', 'concurrent' ]);
 };
