@@ -14,6 +14,7 @@
             remember: false
         };
 
+        vm.registrationSubmitted = false;
         vm.registration = {
             firstname: '',
             lastname: '',
@@ -38,16 +39,20 @@
             return Auth.currentUser;
         };
 
-        vm.register = function() {
-            Auth.register(vm.registration, function(err, user) {
-                vm.message = null;
-                if (err) {
-                    vm.message = err;
-                } else {
-                    $state.go('payments');
-                }
-                console.log(user);
-            });
+        vm.submitRegistration = function(isValid) {
+            vm.registrationSubmitted = true;
+
+            if (isValid) {
+                Auth.register(vm.registration, function(err, user) {
+                    vm.message = null;
+                    if (err) {
+                        vm.message = err;
+                    } else {
+                        $state.go('payments');
+                    }
+                    console.log(user);
+                });
+            }
         };
     }
 
