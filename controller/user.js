@@ -1,5 +1,4 @@
 var User = require('../models/User');
-var async = require('async');
 
 exports.register = function(req, res, next) {
     // do sth.
@@ -23,7 +22,24 @@ exports.register = function(req, res, next) {
                 password: data.firstPassword
             });
 
-            newUser.save();
+            newUser.save(function (err) {
+                if (err) {
+                    // @TODO: log error
+                    console.log(err);
+                    return next(err);
+                }
+
+                req.logIn(newUser, function (err) {
+                    if (err) {
+                        return next(err);
+                    }
+
+                    return res.json({
+                        message: "Registration successfull",
+                        user: newUser
+                    });
+                });
+            });
         }
     });
 };

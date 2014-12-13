@@ -35,24 +35,18 @@
             // @TODO: Don't send plain password
             var registrationAction = $http.post(/* API_BASE_PATH + */'users/register', registration);
             registrationAction.success(function(data, status, headers, config) {
-                console.log("success");
-                console.log(data);
-                console.log(status);
-                console.log(headers);
-                console.log(config);
+                service.currentUser = data.user;
+                callback(null, data.user);
             });
             registrationAction.error(function(data, status, headers, config) {
                 console.log("error");
-                console.log(data);
-                console.log(status);
-                console.log(headers);
-                console.log(config);
+                callback(data.message, null);
             });
         }
 
         function logout() {
             service.currentUser = { _id: false };
-            $http.post(/*API_BASE_PATH + */'auth/release');
+            $http.get(/*API_BASE_PATH + */'auth/release');
         }
 
         function isAuthenticated() {
