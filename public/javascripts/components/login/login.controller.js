@@ -5,7 +5,7 @@
         .module('app.login')
         .controller('LoginCtrl', LoginCtrl);
 
-    function LoginCtrl(Auth) {
+    function LoginCtrl($state, Auth) {
         var vm = this;
 
         vm.credentials = {
@@ -27,6 +27,8 @@
                 vm.message = null;
                 if (err) {
                     vm.message = err;
+                } else {
+                    $state.go('payments');
                 }
                 console.log(user);
             });
@@ -41,11 +43,13 @@
                 vm.message = null;
                 if (err) {
                     vm.message = err;
+                } else {
+                    $state.go('payments');
                 }
                 console.log(user);
             });
         };
     }
 
-    LoginCtrl.$inject = ['Auth'];
+    LoginCtrl.$inject = [ '$state', 'Auth' ];
 })();
