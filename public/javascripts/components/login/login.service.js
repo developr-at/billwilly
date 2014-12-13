@@ -50,7 +50,6 @@
         }
 
         function isAuthenticated() {
-            console.log("isAuthenticated");
             return !!service.currentUser._id;
         }
 
