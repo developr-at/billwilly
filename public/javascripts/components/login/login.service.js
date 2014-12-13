@@ -21,7 +21,8 @@
 
         function login(credentials, callback) {
             /*jshint validthis:true */
-            var authentication = $http.post(/*API_BASE_PATH + */'auth/authenticate', credentials);
+            // @TODO: Don't send plain password
+            var authentication = $http.post(API_BASE_PATH + 'auth/authenticate', credentials);
             authentication.success(function(data, status, headers, config) {
                 service.currentUser = data.user;
                 callback(null, data.user);
@@ -33,7 +34,7 @@
 
         function register(registration, callback) {
             // @TODO: Don't send plain password
-            var registrationAction = $http.post(/* API_BASE_PATH + */'users/register', registration);
+            var registrationAction = $http.post(API_BASE_PATH + 'users/register', registration);
             registrationAction.success(function(data, status, headers, config) {
                 service.currentUser = data.user;
                 callback(null, data.user);
@@ -46,7 +47,7 @@
 
         function logout() {
             service.currentUser = { _id: false };
-            $http.get(/*API_BASE_PATH + */'auth/release');
+            $http.get(API_BASE_PATH + 'auth/release');
         }
 
         function isAuthenticated() {

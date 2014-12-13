@@ -3,8 +3,8 @@
 
 module.exports = function(grunt) {
 
-grunt.initConfig({
-    pkg: grunt.file.readJSON('package.json'),
+    grunt.initConfig({
+        pkg: grunt.file.readJSON('package.json'),
 
         bower: {
             install: {
@@ -43,7 +43,7 @@ grunt.initConfig({
                 options: {
                     atBegin: true
                 }
-            },
+            }
         },
 
         nodemon: {
@@ -51,7 +51,7 @@ grunt.initConfig({
                 script: './bin/www',
                 options: {
                     nodeArgs: ['--debug'],
-                    ignore: ['node_modules/**', 'public/**'],
+                    ignore: ['node_modules/**', 'public/**']
                 }
             }
         },

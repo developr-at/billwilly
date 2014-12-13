@@ -16,6 +16,10 @@ var app = express();
 
 var mongoose = require('mongoose');
 var dbInit = require('./init/db');
+
+var API_VERSION = 'v1';
+
+
 mongoose.connect('mongodb://localhost/billwilly');
 
 // initiliazes the database
@@ -45,10 +49,21 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+// API routes
+app.use('/api/' + API_VERSION + '/auth', auth);
+app.use('/api/' + API_VERSION, routes);
+app.use('/api/' + API_VERSION  + 'users', users);
 
-app.use('/auth', auth);
-app.use('/', routes);
-app.use('/users', users);
+// Always render frontend
+// @TODO: replace * with valid frontend routes
+app.get('*', function (req, res, next) {
+    if (req.url !== '/' && req.url.indexOf('/api') !== 0) {
+        req.url = '/#' + req.url;
+        res.render('index');
+    } else {
+        next();
+    }
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
