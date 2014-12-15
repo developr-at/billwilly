@@ -46,6 +46,21 @@ module.exports = function(grunt) {
             }
         },
 
+        shell: {
+            mongodb: {
+                command: 'mongod --dbpath ./data/db/billwilly',
+                options: {
+                    async: true,
+                    stdout: false,
+                    stderr: true,
+                    failOnError: true,
+                    execOptions: {
+                        cwd: '.'
+                    }
+                }
+            }
+        },
+
         nodemon: {
             dev: {
                 script: './bin/www',
@@ -61,7 +76,7 @@ module.exports = function(grunt) {
                 logConcurrentOutput: true
             },
 
-            tasks: ['nodemon', 'watch']
+            tasks: ['shell', 'nodemon', 'watch']
         }
     });
 
@@ -71,6 +86,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-bower-task');
     grunt.loadNpmTasks('grunt-nodemon');
     grunt.loadNpmTasks('grunt-concurrent');
+    grunt.loadNpmTasks('grunt-shell-spawn');
 
     grunt.registerTask('dev', [ 'bower', 'concurrent' ]);
 };
