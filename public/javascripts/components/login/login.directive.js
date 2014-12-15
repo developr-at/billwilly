@@ -3,7 +3,8 @@
 
     angular
         .module('app.login')
-        .directive('compareTo', compareTo);
+        .directive('compareTo', compareTo)
+        .directive('uniqueEmail', uniqueEmail);
 
     function compareTo() {
         return {
@@ -29,5 +30,17 @@
             }
         };
     }
+
+    function uniqueEmail(Auth) {
+        return {
+            restrict: 'A',
+            require: 'ngModel',
+            link: function (scope, element, attrs, ngModel) {
+                ngModel.$asyncValidators.unique = Auth.checkEmail;
+            }
+        };
+    }
+
+    uniqueEmail.$inject = [ 'Auth' ];
 
 })();

@@ -5,8 +5,9 @@
         .module('app.login')
         .factory('Auth', Auth);
 
-    function Auth($http, API_BASE_PATH) {
+    function Auth($http, $q, API_BASE_PATH) {
         var service = {
+            'checkEmail': checkEmail,
             'login': login,
             'register': register,
             'logout': logout,
@@ -19,6 +20,22 @@
 
         ////////////////////////
 
+        function checkEmail(email) {
+            var deferred = $q.defer();
+
+            console.log("checkEmail: " + email);
+
+            $http.post(API_BASE_PATH + 'users/check', { email: email }).then(function() {
+                console.log("reject");
+                deferred.reject();
+            }, function() {
+                console.log("resolve");
+                deferred.resolve();
+            });
+
+            return deferred.promise;
+        }
+
         function login(credentials, callback) {
             /*jshint validthis:true */
             // @TODO: Don't send plain password
@@ -27,6 +44,7 @@
                 service.currentUser = data.user;
                 callback(null, data.user);
             });
+
             authentication.error(function(data, status, headers, config) {
                 callback(data.message, null);
             });
@@ -39,6 +57,7 @@
                 service.currentUser = data.user;
                 callback(null, data.user);
             });
+
             registrationAction.error(function(data, status, headers, config) {
                 console.log("error");
                 callback(data.message, null);
@@ -59,5 +78,5 @@
         }
     }
 
-    Auth.$inject = [ '$http', 'API_BASE_PATH' ];
+    Auth.$inject = [ '$http', '$q', 'API_BASE_PATH' ];
 })();

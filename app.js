@@ -52,7 +52,7 @@ app.use(passport.session());
 // API routes
 app.use('/api/' + API_VERSION + '/auth', auth);
 app.use('/api/' + API_VERSION, routes);
-app.use('/api/' + API_VERSION  + 'users', users);
+app.use('/api/' + API_VERSION  + '/users', users);
 
 // Always render frontend
 // @TODO: replace * with valid frontend routes

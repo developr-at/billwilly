@@ -18,6 +18,8 @@
         function addFriend() {
         	User.addFriend(vm.newFriendEmail);
         }
+
+
     }
 
     FriendsCtrl.$inject = [ "Payments", "User" ];
