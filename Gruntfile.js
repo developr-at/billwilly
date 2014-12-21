@@ -23,14 +23,14 @@ module.exports = function(grunt) {
             },
             dist: {
                 files: {
-                    'libs/libraries.js': [
-                        "libs/angular/angular.js",
-                        "libs/angular-messages/angular-messages.js",
-                        "libs/angular-ui-router/release/angular-ui-router.js",
-                        "libs/angular-google-chart/ng-google-chart.js",
-                        "libs/angular-smart-table/dist/smart-table.min.js",
-                        "libs/jquery/dist/jquery.js",
-                        "libs/bootstrap/dist/js/bootstrap.js"
+                    'public/libs/libraries.js': [
+                        "public/libs/angular/angular.js",
+                        "public/libs/angular-messages/angular-messages.js",
+                        "public/libs/angular-ui-router/release/angular-ui-router.js",
+                        "public/libs/angular-google-chart/ng-google-chart.js",
+                        "public/libs/angular-smart-table/dist/smart-table.min.js",
+                        "public/libs/jquery/dist/jquery.js",
+                        "public/libs/bootstrap/dist/js/bootstrap.js"
                     ],
 
                     'public/javascripts/dist/main.js': [ 'public/javascripts/angularApp.js', 'public/javascripts/angular-core.js', 'public/javascripts/app.controller.js' ],
