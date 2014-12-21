@@ -8,6 +8,7 @@
     function LoginCtrl($state, Auth) {
         var vm = this;
 
+        vm.loginSubmitted = false;
         vm.credentials = {
             email: '',
             password: '',
@@ -23,16 +24,20 @@
             secondPassword: ''
         };
 
-        vm.login = function() {
-            Auth.login(vm.credentials, function(err, user) {
-                vm.message = null;
-                if (err) {
-                    vm.message = err;
-                } else {
-                    $state.go('payments');
-                }
-                console.log(user);
-            });
+        vm.submitLogin = function(isValid) {
+            vm.loginSubmitted = true;
+
+            if (isValid) {
+                Auth.login(vm.credentials, function(err, user) {
+                    vm.message = null;
+                    if (err) {
+                        vm.message = err;
+                    } else {
+                        $state.go('payments');
+                    }
+                    console.log(user);
+                });
+            }
         };
 
         vm.currentUser = function() {

@@ -12,32 +12,44 @@
                 <div class="form-group" ng-class="{ 'has-error' : registrationForm.firstname.$invalid && login.registrationSubmitted }">
                     <label for="firstname">Firstname</label>
                     <input ng-model="login.registration.firstname" type="text" class="form-control" name="firstname" id="firstname" placeholder="Enter Firstname" required>
-                    <p ng-show="registrationForm.firstname.$invalid && login.registrationSubmitted" class="help-block">Enter a firstname.</p>
+                    <ng-messages for="registrationForm.firstname.$error" ng-if="login.registrationSubmitted">
+                        <ng-message when="required" class="help-block">Please provide a firstname.</ng-message>
+                    </ng-messages>
                 </div>
                 <div class="form-group" ng-class="{ 'has-error' : registrationForm.lastname.$invalid && login.registrationSubmitted }">
                     <label for="lastname">Lastname</label>
                     <input ng-model="login.registration.lastname" type="text" class="form-control" name="lastname" id="lastname" placeholder="Enter Lastname" required>
-                    <p ng-show="registrationForm.lastname.$invalid && login.registrationSubmitted" class="help-block">Enter a lastname.</p>
+                    <ng-messages for="registrationForm.lastname.$error" ng-if="login.registrationSubmitted">
+                        <ng-message when="required" class="help-block">Please provide a lastname.</ng-message>
+                    </ng-messages>
                 </div>
                 <div class="form-group" ng-class="{ 'has-error' : registrationForm.email.$invalid && login.registrationSubmitted }">
                     <label for="email">Email address</label>
-                    <input ng-model="login.registration.email" type="text" class="form-control" name="email" id="email" placeholder="Enter email" ng-model-options="{ debounce: 100 }" unique-email required>
-                    <p ng-show="registrationForm.email.$invalid && login.registrationSubmitted" class="help-block">Enter a valid email.</p>
-
-                    <ng-messages for="registrationForm.email.$error" ng-if="registrationForm.email.$invalid">
-                        <ng-message when="unique" class="error">This is taken</ng-message>
-                        <ng-message when="required" class="error">This is required</ng-message>
+                    <input ng-model="login.registration.email" type="email" class="form-control" name="email" id="email" placeholder="Enter email" ng-model-options="{ debounce: 100 }" unique-email required>
+                    <ng-messages for="registrationForm.email.$error">
+                        <ng-message when="unique" class="help-block">This email adress is already in use.</ng-message>
+                    </ng-messages>
+                    <ng-messages for="registrationForm.email.$error" ng-if="login.registrationSubmitted">
+                        <ng-message when="email" class="help-block">Please enter a valid email adress.</ng-message>
+                        <ng-message when="required" class="help-block">Please provide an email adress.</ng-message>
                     </ng-messages>
                 </div>
                 <div class="form-group" ng-class="{ 'has-error' : registrationForm.firstPassword.$invalid && login.registrationSubmitted }">
                     <label for="firstPassword">Password</label>
                     <input ng-model="login.registration.firstPassword" type="password" class="form-control" name="firstPassword" id="firstPassword" placeholder="Enter password" required ng-minlength="8" ng-maxlength="16">
-                    <p ng-show="registrationForm.firstPassword.$invalid && login.registrationSubmitted" class="help-block">Password must be 8 - 16 characters long.</p>
+                    <ng-messages for="registrationForm.firstPassword.$error" ng-if="login.registrationSubmitted">
+                        <ng-message when="minlength" class="help-block">Password must be 8 - 16 characters long.</ng-message>
+                        <ng-message when="maxlength" class="help-block">Password must be 8 - 16 characters long.</ng-message>
+                        <ng-message when="required" class="help-block">Please provide a password.</ng-message>
+                    </ng-messages>
                 </div>
                 <div class="form-group" ng-class="{ 'has-error' : registrationForm.secondPassword.$invalid && login.registrationSubmitted }">
                     <label for="secondPassword">Password (Repeat)</label>
                     <input ng-model="login.registration.secondPassword" type="password" class="form-control" name="secondPassword" id="secondPassword" placeholder="Enter password again" compare-to="login.registration.firstPassword" required>
-                    <p ng-show="registrationForm.secondPassword.$invalid && login.registrationSubmitted" class="help-block">Password confirmation must match the password.</p>
+                    <ng-messages for="registrationForm.secondPassword.$error" ng-if="login.registrationSubmitted">
+                        <ng-message when="compareTo" class="help-block">Password confirmation must match the password.</ng-message>
+                        <ng-message when="required" class="help-block">Please provide a password.</ng-message>
+                    </ng-messages>
                 </div>
                 <button type="submit" class="btn btn-primary">Register</button>
             </form>

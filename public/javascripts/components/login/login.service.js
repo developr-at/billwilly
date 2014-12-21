@@ -26,10 +26,8 @@
             console.log("checkEmail: " + email);
 
             $http.post(API_BASE_PATH + 'users/check', { email: email }).then(function() {
-                console.log("reject");
                 deferred.reject();
             }, function() {
-                console.log("resolve");
                 deferred.resolve();
             });
 
