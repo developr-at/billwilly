@@ -25,6 +25,7 @@ module.exports = function(grunt) {
                 files: {
                     'public/libs/libraries.js': [
                         "public/libs/angular/angular.js",
+                        "public/libs/angular-cookies/angular-cookies.js",
                         "public/libs/angular-messages/angular-messages.js",
                         "public/libs/angular-ui-router/release/angular-ui-router.js",
                         "public/libs/angular-google-chart/ng-google-chart.js",

@@ -5,6 +5,8 @@ module.exports = (function() {
 
     var module = {
         check: check,
+        profile: profile,
+        editProfile: editProfile,
         register: register,
         remove: remove,
         update: update,
@@ -35,6 +37,48 @@ module.exports = (function() {
                 });
             }
         });
+    }
+
+    function profile(req, res, next) {
+        var data = req.body;
+
+        User.findOne({ email: data.email }, function(err, user) {
+            if (err) {
+                return next(err);
+            }
+
+            if (user) {
+                return res.json({
+                    user: {
+                        firstname: user.firstname,
+                        lastname: user.lastname,
+                        email: user.email
+                    }
+                });
+            } else {
+                return res.status(404).json({
+                    message: "User not found"
+                });
+            }
+        });
+    }
+
+    function editProfile(req, res, next) {
+        var data = req.body;
+
+        User.findOne({ email: data.email }, function(err, user) {
+            if (err) {
+                return next(err);
+            }
+
+            if (user) {
+                // Update data
+                user.firstname = data.firstname;
+                user.lastname = data.lastname;
+            } else {
+                // ...
+            }
+        })
     }
 
     function register(req, res, next) {

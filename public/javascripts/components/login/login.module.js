@@ -3,7 +3,8 @@
 
     angular
         .module('app.login', [
-            'ngMessages'
+            'ngMessages',
+            'ngCookies'
         ])
         .config(config);
 

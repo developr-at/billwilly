@@ -2,11 +2,11 @@ var express = require('express');
 var router = express.Router();
 var userController = require('../controller/user.js');
 
-/* GET users listing. */
-// @TODO: Remove?
-router.get('/', function(req, res) {
-    res.send('respond with a resource');
-});
+router.route('/profile/edit')
+    .post(userController.editProfile);
+
+router.route('/profile')
+    .post(userController.profile);
 
 router.route('/register')
     .post(userController.register);

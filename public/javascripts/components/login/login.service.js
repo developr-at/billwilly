@@ -5,14 +5,14 @@
         .module('app.login')
         .factory('Auth', Auth);
 
-    function Auth($http, $q, API_BASE_PATH) {
+    function Auth($http, $q, $cookieStore, API_BASE_PATH) {
         var service = {
             'checkEmail': checkEmail,
             'login': login,
             'register': register,
             'logout': logout,
             'isAuthenticated': isAuthenticated,
-            'currentUser': { _id: false },
+            'currentUser': $cookieStore.get('user') || { _id: false },
             'getCurrentUser': getCurrentUser
         };
 
@@ -40,6 +40,7 @@
             var authentication = $http.post(API_BASE_PATH + 'auth/authenticate', credentials);
             authentication.success(function(data, status, headers, config) {
                 service.currentUser = data.user;
+                $cookieStore.put('user', data.user);
                 callback(null, data.user);
             });
 
@@ -64,6 +65,7 @@
 
         function logout() {
             service.currentUser = { _id: false };
+            $cookieStore.remove('user');
             $http.get(API_BASE_PATH + 'auth/release');
         }
 
@@ -76,5 +78,5 @@
         }
     }
 
-    Auth.$inject = [ '$http', '$q', 'API_BASE_PATH' ];
+    Auth.$inject = [ '$http', '$q', '$cookieStore', 'API_BASE_PATH' ];
 })();
