@@ -43,6 +43,14 @@ module.exports = function(grunt) {
             }
         },
 
+        less: {
+            dev: {
+                files: {
+                    'public/stylesheets/app.css': 'assets/stylesheets/app.less'
+                }
+            }
+        },
+
         jshint: {
             all: [ 'Gruntfile.js', 'public/javascripts/*.js', 'public/javascripts/**/*.js' ]
         },
@@ -51,6 +59,14 @@ module.exports = function(grunt) {
             dev: {
                 files: [ 'Gruntfile.js', 'public/javascripts/**/*.js', '!public/javascripts/dist/*.js', '*.html' ],
                 tasks: [ 'jshint', 'concat:dist' ],
+                options: {
+                    atBegin: true
+                }
+            },
+
+            css: {
+                files: [ 'assets/stylesheets/*.less' ],
+                tasks: [ 'less:dev' ],
                 options: {
                     atBegin: true
                 }
@@ -87,10 +103,11 @@ module.exports = function(grunt) {
                 logConcurrentOutput: true
             },
 
-            tasks: ['shell', 'nodemon', 'watch']
+            tasks: ['shell', 'nodemon', 'watch:css', 'watch:dev']
         }
     });
 
+    grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-watch');
