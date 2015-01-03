@@ -14,4 +14,7 @@ router.route('/register')
 router.route('/check')
     .post(userController.check);
 
+router.route('/friends')
+    .post(userController.getFriends);
+
 module.exports = router;

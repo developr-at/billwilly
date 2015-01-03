@@ -4,12 +4,19 @@ module.exports = (function() {
     'use strict';
 
     var module = {
+        // general
         check: check,
+
+        // profile
         profile: profile,
         editProfile: editProfile,
+
+        //
         register: register,
         remove: remove,
         update: update,
+
+        // friends
         getFriends: getFriends,
         addFriend: addFriend,
         removeFriend: removeFriend
@@ -160,7 +167,7 @@ module.exports = (function() {
 
     function addFriend(req, res, next) {
         var data = req.body;
-        var currentUser = req.user;
+        var currentUser = req.cookies.user;
 
         if (currentUser._id === data.id || currentUser.admin) {
             return next(new Error('Id parameter has to be id of your user or id of an admin user'), null);

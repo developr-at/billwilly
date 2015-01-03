@@ -8,8 +8,8 @@ passport.use(new LocalStrategy({
   },
 	function(email, password, callback) {
   	User.findOne({ email: email }, function (err, user) {
-    		if (err) { 
-    			return callback(err, false, { message: err }); 
+    		if (err) {
+    			return callback(err, false, { message: err });
     		}
 
     		// No user found with that email
@@ -19,13 +19,13 @@ passport.use(new LocalStrategy({
 
     		// Make sure the password is correct
     		user.verifyPassword(password, function(err, isMatch) {
-      		if (err) { 
-      			return callback(err, false, { message: err }); 
+      		if (err) {
+      			return callback(err, false, { message: err });
       		}
 
       		// Password did not match
-      		if (!isMatch) { 
-      			return callback(null, false, { message: 'Invalid credentials' }); 
+      		if (!isMatch) {
+      			return callback(null, false, { message: 'Invalid credentials' });
       		}
 
       		// Success
@@ -47,8 +47,8 @@ passport.deserializeUser(function(id, done) {
 
 exports.isAuthenticated = function(req, res, next) {
 	return passport.authenticate('local', function(err, user, info) {
-      if (err) { 
-        return next(err); 
+      if (err) {
+        return next(err);
       }
 
       if (!user) {
@@ -58,8 +58,8 @@ exports.isAuthenticated = function(req, res, next) {
         });
       }
       req.logIn(user, function(err) {
-        if (err) { 
-          return next(err); 
+        if (err) {
+          return next(err);
         }
         return res.json({
           message: null,

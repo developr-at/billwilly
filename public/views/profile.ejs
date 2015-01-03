@@ -43,5 +43,16 @@
             </div>
         </div>
         <hr class="soften" />
+        <div class="row">
+            <h2>Friends</h2>
+            <div ng-hide="profile.friends.length > 0">
+                You currently have no friends
+            </div>
+            <div ng-show="profile.friends">
+                <ul>
+                    <li ng-repeat="f in profile.friends">{{ f.firstname }} {{ f.lastname }}</li>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
