@@ -3,26 +3,37 @@
 
     angular
         .module('app.user')
-		.factory('User', User);
+        .factory('User', User);
 
-	function User($http, Auth, API_BASE_PATH) {
-		var service = {
-			profile: profile,
-			editProfile: editProfile,
-			addFriend: addFriend,
-			getFriends: getFriends
-		};
+    /**
+     * User service manages logic concerning the users.
+     * @param {object} $http - HTTP service to issue requests
+     * @param {object} Auth - Auth service
+     * @param {object} API_BASE_PATH - Base path for API requests
+     */
+    function User($http, Auth, API_BASE_PATH) {
+        // Service interface
+        var service = {
+            // Profile
+            profile: profile,
+            editProfile: editProfile,
 
-		return service;
+            // Friends
+            addFriend: addFriend,
+            getFriends: getFriends
+        };
 
-		////////////////////////
+        return service;
 
-		function profile(email, callback) {
-			var data = {
-				'email': email
-			};
+        ///////////////////////////////////////////////////////////////////////
 
-            var request = $http.post(API_BASE_PATH + 'users/profile', data );
+        /**
+         * Retrieves the profile data for a user.
+         * @param {string} userEmail - Email of the user
+         * @param {function} callback - Callback to call on success/failure
+         */
+        function profile(userEmail, callback) {
+            var request = $http.post(API_BASE_PATH + 'users/profile', { email: userEmail } );
             request.success(function(data, status, headers, config) {
                 callback(null, data);
             });
@@ -30,9 +41,14 @@
             request.error(function(data, status, headers, config) {
                 callback(data, null);
             });
-		}
+        }
 
-		function editProfile(profileData, callback) {
+        /**
+         * Updates the profile data of the user.
+         * @param {object} profileData - The update data of the profile
+         * @param {function} callback - Callback to call on success/failure
+         */
+        function editProfile(profileData, callback) {
             var request = $http.post(API_BASE_PATH + 'users/profile/edit', profileData );
             request.success(function(data, status, headers, config) {
                 callback(null, data);
@@ -42,13 +58,22 @@
                 callback(data, null);
             });
 
-		}
+        }
 
-		function addFriend(email) {
-			console.log("addFriend: " + email);
-		}
+        function addFriend(userId, friendEmail, callback) {
+            console.log("addFriend: " + email);
 
-		function getFriends(userId, callback) {
+            var request = $http.post(API_BASE_PATH + 'users/friends/add', { id: userId, email: friendEmail });
+            request.success(function(data, status, headers, config) {
+                callback(null, data);
+            });
+
+            request.error(function(data, status, headers, config) {
+                callback(data, null);
+            });
+        }
+
+        function getFriends(userId, callback) {
             var request = $http.post(API_BASE_PATH + 'users/friends', { id: userId });
             request.success(function(data, status, headers, config) {
                 callback(null, data);
@@ -57,8 +82,8 @@
             request.error(function(data, status, headers, config) {
                 callback(data, null);
             });
-		}
-	}
+        }
+    }
 
-	User.$inject = [ '$http', 'Auth', 'API_BASE_PATH' ];
+    User.$inject = [ '$http', 'Auth', 'API_BASE_PATH' ];
 })();

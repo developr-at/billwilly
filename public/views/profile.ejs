@@ -44,14 +44,39 @@
         </div>
         <hr class="soften" />
         <div class="row">
-            <h2>Friends</h2>
-            <div ng-hide="profile.friends.length > 0">
-                You currently have no friends
+            <div class="col-sm-12">
+                <h2>Friends</h2>
+                <div class="well">
+                    <div class="row">
+                        <form name="addFriendForm" role="form" novalidate>
+                            <div class="col-sm-6">
+                                <div class="input-group">
+                                    <input ng-model="profile.newFriendEmail" name="friendEmail" id="friendEmail" type="email" class="form-control" placeholder="Enter E-Mail...">
+                                    <span class="input-group-btn">
+                                        <button ng-click="profile.addFriend()" class="btn btn-default" type="button">Add Friend</button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <ng-messages for="addFriendForm.friendEmail.$error" ng-if="addFriendForm.friendEmail.$dirty">
+                                    <ng-message when="email" class="help-block">Please enter a valid email adress.</ng-message>
+                                </ng-messages>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div ng-show="profile.friends">
-                <ul>
-                    <li ng-repeat="f in profile.friends">{{ f.firstname }} {{ f.lastname }}</li>
-                </ul>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div ng-hide="profile.friends.length > 0">
+                    You currently have no friends
+                </div>
+                <div ng-show="profile.friends">
+                    <ul>
+                        <li ng-repeat="f in profile.friends">{{ f.firstname }} {{ f.lastname }}</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

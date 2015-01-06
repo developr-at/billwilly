@@ -87,4 +87,4 @@ module.exports = (function () {
         req.logout();
         res.redirect('/');
     }
-});
+})();

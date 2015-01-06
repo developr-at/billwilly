@@ -11,10 +11,10 @@ module.exports = (function() {
         profile: profile,
         editProfile: editProfile,
 
-        //
+        // crud
         register: register,
-        remove: remove,
         update: update,
+        remove: remove,
 
         // friends
         getFriends: getFriends,

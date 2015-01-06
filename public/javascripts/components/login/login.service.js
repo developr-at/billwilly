@@ -18,12 +18,10 @@
 
         return service;
 
-        ////////////////////////
+        ///////////////////////////////////////////////////////////////////////
 
         function checkEmail(email) {
             var deferred = $q.defer();
-
-            console.log("checkEmail: " + email);
 
             $http.post(API_BASE_PATH + 'users/check', { email: email }).then(function() {
                 deferred.reject();
@@ -37,27 +35,27 @@
         function login(credentials, callback) {
             /*jshint validthis:true */
             // @TODO: Don't send plain password
-            var authentication = $http.post(API_BASE_PATH + 'auth/authenticate', credentials);
-            authentication.success(function(data, status, headers, config) {
+            var request = $http.post(API_BASE_PATH + 'auth/authenticate', credentials);
+            request.success(function(data, status, headers, config) {
                 service.currentUser = data.user;
                 $cookieStore.put('user', data.user);
                 callback(null, data.user);
             });
 
-            authentication.error(function(data, status, headers, config) {
+            request.error(function(data, status, headers, config) {
                 callback(data.message, null);
             });
         }
 
         function register(registration, callback) {
             // @TODO: Don't send plain password
-            var registrationAction = $http.post(API_BASE_PATH + 'users/register', registration);
-            registrationAction.success(function(data, status, headers, config) {
+            var request = $http.post(API_BASE_PATH + 'users/register', registration);
+            request.success(function(data, status, headers, config) {
                 service.currentUser = data.user;
                 callback(null, data.user);
             });
 
-            registrationAction.error(function(data, status, headers, config) {
+            request.error(function(data, status, headers, config) {
                 console.log("error");
                 callback(data.message, null);
             });
