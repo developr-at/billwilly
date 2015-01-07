@@ -55,6 +55,30 @@ module.exports = function(grunt) {
             all: [ 'Gruntfile.js', 'public/javascripts/*.js', 'public/javascripts/**/*.js' ]
         },
 
+        jsdoc: {
+            frontend: {
+                src: [ 'public/javascripts/components/**/*.js' ],
+                options: {
+                    destination: 'doc/frontend',
+                    template : "node_modules/grunt-jsdoc/node_modules/ink-docstrap/template",
+                    configure : "node_modules/grunt-jsdoc/node_modules/ink-docstrap/template/jsdoc.conf.json"
+                }
+            },
+
+            backend: {
+                src: [
+                    'controller/*.js',
+                    'models/*.js',
+                    'routes/*.js',
+                ],
+                options: {
+                    destination: 'doc/backend',
+                    template : "node_modules/grunt-jsdoc/node_modules/ink-docstrap/template",
+                    configure : "node_modules/grunt-jsdoc/node_modules/ink-docstrap/template/jsdoc.conf.json"
+                }
+            }
+        },
+
         watch: {
             dev: {
                 files: [ 'Gruntfile.js', 'public/javascripts/**/*.js', '!public/javascripts/dist/*.js', '*.html' ],
@@ -115,6 +139,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-nodemon');
     grunt.loadNpmTasks('grunt-concurrent');
     grunt.loadNpmTasks('grunt-shell-spawn');
+    grunt.loadNpmTasks('grunt-jsdoc');
 
     grunt.registerTask('dev', [ 'bower', 'concurrent' ]);
 };

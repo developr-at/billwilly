@@ -1,4 +1,9 @@
-(function () {
+/**
+ * @fileOverview Definition of the Profile Controller
+ * @author Thomas Prochazka
+ * @version: 0.1
+ */
+ (function () {
     'use strict';
 
     angular
