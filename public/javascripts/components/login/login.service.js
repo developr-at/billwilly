@@ -1,4 +1,9 @@
-(function () {
+/**
+ * @fileOverview Definition of the Login Service
+ * @author Thomas Prochazka
+ * @version: 0.1
+ */
+ (function () {
     'use strict';
 
     angular

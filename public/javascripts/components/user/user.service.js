@@ -1,4 +1,9 @@
-(function () {
+/**
+ * @fileOverview Definition of the User Service
+ * @author Thomas Prochazka
+ * @version: 0.1
+ */
+ (function () {
     'use strict';
 
     angular
@@ -57,9 +62,14 @@
             request.error(function(data, status, headers, config) {
                 callback(data, null);
             });
-
         }
 
+        /**
+         * Adds a friend to the user.
+         * @param {int} userId - The id of the first user
+         * @param {string} friendEmail - The mail of the friend to add
+         * @param {function} callback - Callback to call on success/failure
+         */
         function addFriend(userId, friendEmail, callback) {
             console.log("addFriend: " + email);
 
@@ -73,6 +83,11 @@
             });
         }
 
+        /**
+         * Retrieves a list of friends for the specified user.
+         * @param {int} userId - The id of the user to retrieve the friends of
+         * @param {function} callback - Callback to call on success/failure
+         */
         function getFriends(userId, callback) {
             var request = $http.post(API_BASE_PATH + 'users/friends', { id: userId });
             request.success(function(data, status, headers, config) {

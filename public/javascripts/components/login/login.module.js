@@ -1,4 +1,9 @@
-(function () {
+/**
+ * @fileOverview Definition of the Login Module
+ * @author Thomas Prochazka
+ * @version: 0.1
+ */
+ (function () {
     'use strict';
 
     angular
@@ -24,4 +29,5 @@
         });
     }
 
+    config.$inject = [ '$stateProvider' ];
 })();
