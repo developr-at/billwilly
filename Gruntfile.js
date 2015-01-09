@@ -11,7 +11,7 @@ module.exports = function(grunt) {
                 options: {
                     install: true,
                     copy: false,
-                    targetDir: 'public/libs',
+                    targetDir: 'assets/javascripts/libs/',
                     cleanTargetDir: true
                 }
             }
@@ -23,23 +23,32 @@ module.exports = function(grunt) {
             },
             dist: {
                 files: {
-                    'public/libs/libraries.js': [
-                        "public/libs/angular/angular.js",
-                        "public/libs/angular-cookies/angular-cookies.js",
-                        "public/libs/angular-messages/angular-messages.js",
-                        "public/libs/angular-ui-router/release/angular-ui-router.js",
-                        "public/libs/angular-google-chart/ng-google-chart.js",
-                        "public/libs/angular-smart-table/dist/smart-table.min.js",
-                        "public/libs/jquery/dist/jquery.js",
-                        "public/libs/bootstrap/dist/js/bootstrap.js"
+                    'public/javascripts/libraries.js': [
+                        "assets/javascripts/libs/angular/angular.js",
+                        "assets/javascripts/libs/angular-cookies/angular-cookies.js",
+                        "assets/javascripts/libs/angular-messages/angular-messages.js",
+                        "assets/javascripts/libs/angular-ui-router/release/angular-ui-router.js",
+                        "assets/javascripts/libs/angular-google-chart/ng-google-chart.js",
+                        "assets/javascripts/libs/angular-smart-table/dist/smart-table.min.js",
+                        "assets/javascripts/libs/jquery/dist/jquery.js",
+                        "assets/javascripts/libs/bootstrap/dist/js/bootstrap.js"
                     ],
 
-                    'public/javascripts/dist/main.js': [ 'public/javascripts/angularApp.js', 'public/javascripts/angular-core.js', 'public/javascripts/app.controller.js' ],
-                    'public/javascripts/dist/modules.js': [ 'public/javascripts/components/**/*.module.js' ],
-                    'public/javascripts/dist/controllers.js': [ 'public/javascripts/components/**/*.controller.js' ],
-                    'public/javascripts/dist/services.js': [ 'public/javascripts/components/**/*.service.js' ],
-                    'public/javascripts/dist/directives.js': [ 'public/javascripts/components/**/*.directive.js' ]
+                    'public/javascripts/main.js': [ 'assets/javascripts/angularApp.js', 'assets/javascripts/angular-core.js' ],
+                    'public/javascripts/modules.js': [ 'assets/javascripts/components/**/*.module.js' ],
+                    'public/javascripts/controllers.js': [ 'assets/javascripts/components/**/*.controller.js' ],
+                    'public/javascripts/services.js': [ 'assets/javascripts/components/**/*.service.js' ],
+                    'public/javascripts/directives.js': [ 'assets/javascripts/components/**/*.directive.js' ]
                 }
+            }
+        },
+
+        copy: {
+            libs: {
+                cwd: 'assets/javascripts/libs/bootstrap/dist',
+                src: '**/*',
+                dest: 'public/libs/bootstrap',
+                expand: true
             }
         },
 
@@ -52,12 +61,12 @@ module.exports = function(grunt) {
         },
 
         jshint: {
-            all: [ 'Gruntfile.js', 'public/javascripts/*.js', 'public/javascripts/**/*.js' ]
+            all: [ 'Gruntfile.js', 'assets/javascripts/*.js', 'assets/javascripts/components/**/*.js', '!assets/javascripts/libs/**/*.js' ]
         },
 
         jsdoc: {
             frontend: {
-                src: [ 'public/javascripts/components/**/*.js' ],
+                src: [ 'assets/javascripts/components/**/*.js' ],
                 options: {
                     destination: 'doc/frontend',
                     template : "node_modules/grunt-jsdoc/node_modules/ink-docstrap/template",
@@ -81,7 +90,7 @@ module.exports = function(grunt) {
 
         watch: {
             dev: {
-                files: [ 'Gruntfile.js', 'public/javascripts/**/*.js', '!public/javascripts/dist/*.js', '*.html' ],
+                files: [ 'Gruntfile.js', 'assets/javascripts/**/*.js', '*.html' ],
                 tasks: [ 'jshint', 'concat:dist' ],
                 options: {
                     atBegin: true
@@ -117,7 +126,7 @@ module.exports = function(grunt) {
                 script: './bin/www',
                 options: {
                     nodeArgs: ['--debug'],
-                    ignore: ['node_modules/**', 'public/**']
+                    ignore: ['node_modules/**', 'assets/**', 'public/**']
                 }
             }
         },
@@ -131,6 +140,7 @@ module.exports = function(grunt) {
         }
     });
 
+    grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-concat');
@@ -141,5 +151,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-shell-spawn');
     grunt.loadNpmTasks('grunt-jsdoc');
 
-    grunt.registerTask('dev', [ 'bower', 'concurrent' ]);
+    grunt.registerTask('dev', [ 'bower', 'copy', 'concurrent' ]);
 };

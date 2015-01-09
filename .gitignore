@@ -106,3 +106,4 @@ modules/views/
 # Generated Files
 # --------------------
 public/libs/
+public/javascripts/
