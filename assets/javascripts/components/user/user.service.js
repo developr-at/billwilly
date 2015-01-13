@@ -25,6 +25,7 @@
 
             // Friends
             addFriend: addFriend,
+            removeFriend: removeFriend,
             getFriends: getFriends
         };
 
@@ -34,11 +35,11 @@
 
         /**
          * Retrieves the profile data for a user.
-         * @param {string} userEmail - Email of the user
+         * @param {object} userData - Data of the user
          * @param {function} callback - Callback to call on success/failure
          */
-        function profile(userEmail, callback) {
-            var request = $http.post(API_BASE_PATH + 'users/profile', { email: userEmail } );
+        function profile(userData, callback) {
+            var request = $http.post(API_BASE_PATH + 'users/profile', userData );
             request.success(function(data, status, headers, config) {
                 callback(null, data);
             });
@@ -71,9 +72,28 @@
          * @param {function} callback - Callback to call on success/failure
          */
         function addFriend(userId, friendEmail, callback) {
-            console.log("addFriend: " + email);
+            console.log("addFriend: " + friendEmail);
 
             var request = $http.post(API_BASE_PATH + 'users/friends/add', { id: userId, email: friendEmail });
+            request.success(function(data, status, headers, config) {
+                callback(null, data);
+            });
+
+            request.error(function(data, status, headers, config) {
+                callback(data, null);
+            });
+        }
+
+        /**
+         * Removes a friend from the user.
+         * @param {int} userId - The id of the first user
+         * @param {string} friendEmail - The mail of the friend to remove
+         * @param {function} callback - Callback to call on success/failure
+         */
+        function removeFriend(userId, friendEmail, callback) {
+            console.log("removeFriend: " + friendEmail);
+
+            var request = $http.post(API_BASE_PATH + 'users/friends/remove', { id: userId, email: friendEmail });
             request.success(function(data, status, headers, config) {
                 callback(null, data);
             });

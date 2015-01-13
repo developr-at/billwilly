@@ -73,9 +73,22 @@
                     You currently have no friends
                 </div>
                 <div ng-show="profile.friends">
-                    <ul>
-                        <li ng-repeat="f in profile.friends">{{ f.firstname }} {{ f.lastname }}</li>
-                    </ul>
+                    <table st-table="profile.friends" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Friend</th>
+                                <th>Amount</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="friend in profile.friends">
+                                <td><a ui-sref="userProfile({ userId: friend.id })">{{ friend.firstname }} {{ friend.lastname }} ({{ friend.email }})</a></td>
+                                <td>{{ friend.amount | currency:"EUR":2 }}</td>
+                                <td><button type="button" class="btn btn-default btn-xs" ng-click="profile.removeFriend(friend.email)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

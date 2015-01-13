@@ -21,6 +21,13 @@
             templateUrl: 'views/profile.ejs',
             controller: 'ProfileCtrl as profile'
         });
+
+        // Other user profile page
+        $stateProvider.state('userProfile', {
+            url: '/user/:userId',
+            templateUrl: 'views/user.ejs',
+            controller: 'UserProfileCtrl as profile'
+        });
     }
 
     config.$inject = [ '$stateProvider' ];

@@ -47,9 +47,18 @@ module.exports = (function() {
     }
 
     function profile(req, res, next) {
-        var data = req.body;
+        var data = req.body,
+            query = {};
 
-        User.findOne({ email: data.email }, function(err, user) {
+        if ( data.email )
+            query.email = data.email;
+        else if ( data.id )
+            query._id = data.id;
+
+        console.log(data);
+        console.log(query);
+
+        User.findOne(query, function(err, user) {
             if (err) {
                 return next(err);
             }

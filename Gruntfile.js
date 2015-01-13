@@ -136,7 +136,7 @@ module.exports = function(grunt) {
                 logConcurrentOutput: true
             },
 
-            tasks: ['shell', 'nodemon', 'watch:css', 'watch:dev']
+            tasks: ['shell', 'nodemon'/*, 'watch:css'*/, 'watch:dev']
         }
     });
 
