@@ -57,8 +57,7 @@ app.use('/api/' + API_VERSION  + '/users', users);
 // Always render frontend
 // @TODO: replace * with valid frontend routes
 app.get('*', function (req, res, next) {
-    if (req.url !== '/' && req.url.indexOf('/api') !== 0) {
-        req.url = '/#' + req.url;
+    if (req.url.indexOf('/api') !== 0) {
         res.render('index');
     } else {
         next();

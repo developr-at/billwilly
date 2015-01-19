@@ -10,7 +10,8 @@ module.exports = (function() {
         update: update,
         getFriends: getFriends,
         addFriend: addFriend,
-        removeFriend: removeFriend
+        removeFriend: removeFriend,
+        findFriend: findFriend
     };
 
     return module;
@@ -118,7 +119,7 @@ module.exports = (function() {
         var data = req.body;
         var currentUser = req.user;
 
-        if (currentUser._id === data.id || currentUser.admin) {
+        if (currentUser._id !== data.id && !currentUser.admin) {
             return next(new Error('Id parameter has to be id of your user or id of an admin user'), null);
         }
 
@@ -176,6 +177,10 @@ module.exports = (function() {
 
     function removeFriend(req, res, next) {
         // do sth.
+    }
+
+    function findFriend(req, res, next) {
+
     }
 
 })();
