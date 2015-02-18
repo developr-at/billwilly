@@ -11,6 +11,7 @@
         var service = {
             payments: [],
 
+            addPayment: addPayment,
             getPayments: getPayments,
 
             // Possibly rename
@@ -37,6 +38,10 @@
         return service;
 
         ////////////////////////
+
+        function addPayment(paymentData) {
+            // TODO
+        }
 
         function getPayments() {
             return [];

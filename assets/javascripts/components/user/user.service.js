@@ -19,6 +19,8 @@
     function User($http, Auth, API_BASE_PATH) {
         // Service interface
         var service = {
+            search: search,
+
             // Profile
             profile: profile,
             editProfile: editProfile,
@@ -32,6 +34,17 @@
         return service;
 
         ///////////////////////////////////////////////////////////////////////
+
+        function search(searchTerm, callback) {
+            // var request = $http.get(API_BASE_PATH + 'user/search', { search: searchTerm });
+            // request.success(function(data, status, headers, config) {
+
+            // });
+            // request.error(function(data, status, headers, config) {
+
+            // });
+            callback();
+        }
 
         /**
          * Retrieves the profile data for a user.
@@ -74,7 +87,7 @@
         function addFriend(userId, friendEmail, callback) {
             console.log("addFriend: " + friendEmail);
 
-            var request = $http.post(API_BASE_PATH + 'users/friends/add', { id: userId, email: friendEmail });
+            var request = $http.post(API_BASE_PATH + 'users/friends/add', { id: userId, friendEmail: friendEmail });
             request.success(function(data, status, headers, config) {
                 callback(null, data);
             });

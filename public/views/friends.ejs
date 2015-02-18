@@ -1,43 +1,51 @@
-<div class="row">
-    <div class="col-sm-12">
-        <h1>Friends</h1>
-    </div>
-</div>
-<div class="row">
-    <div class="col-sm-12">
-        <div class="well">
-            <div class="row">
-                <div class="col-sm-6">
-                    <form novalidate>
-                        <div class="input-group">
-                            <input ng-model="friends.newFriendEmail" type="text" class="form-control" placeholder="Enter E-Mail...">
-                            <span class="input-group-btn">
-                                <button ng-click="friends.addFriend()" class="btn btn-default" type="button">Add Friend</button>
-                            </span>
+<div class="well">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>Friends</h1>
+            <form novalidate id="searchFriendForm">
+                <div class="input-group">
+                    <input ng-model="friends.searchTerm" type="text" class="form-control" placeholder="Enter search term">
+                    <span class="input-group-btn">
+                        <button ng-click="friends.searchPerson()" class="btn btn-default" type="button">Search</button>
+                    </span>
+                </div>
+            </form>
+            <div ng-show="friends.searchResult.length > 0" class="well friend-well">
+                <div class="row">
+                    <div class="col-sm-6" ng-repeat="rs in friends.searchResult">
+                        <div class="well search-well clearfix">
+                            <div class="pull-left">
+                                <a ui-sref="userProfile({ userId: rs.id })" target="_blank">
+                                    <div class="name">{{ rs.firstname }} {{ rs.lastname }}</div>
+                                    <div class="email">{{ rs.mail }}</div>
+                                </a>
+                            </div>
+                            <div class="pull-right">
+                                <div class="actions" ng-hide="friends.isAlreadyFriend(rs.id)">
+                                    <button type="button" class="btn btn-default" ng-click="friends.addPersonAsFriend(rs.id)">
+                                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
+            <hr class="soften" />
+            <table st-table="friends.friends" class="table table-striped table-friends">
+                <thead>
+                    <tr>
+                        <th st-sort="name">Friend</th>
+                        <th st-sort="amount">Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="pm in friends.friends">
+                        <td><a ui-sref="userProfile({ userId: pm.id })">{{ pm.name }}</a> ({{ pm.mail}})</td>
+                        <td>{{ pm.amount }}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-sm-12">
-        <table st-table="friends.payments" class="table table-striped">
-            <thead>
-                <tr>
-                    <th>From</th>
-                    <th>To</th>
-                    <th>Amount</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="pm in friends.payments">
-                    <td>{{ pm.fromUser.firstname }}</td>
-                    <td>{{ pm.toUser.firstname }}</td>
-                    <td>{{ pm.amount | currency:pm.currency.name:2 }}</td>
-                </tr>
-            </tbody>
-        </table>
     </div>
 </div>

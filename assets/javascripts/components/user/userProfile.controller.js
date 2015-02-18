@@ -11,13 +11,13 @@
         .controller('UserProfileCtrl', UserProfileCtrl);
 
     /**
-     * Controller for the profile page.
+     * Controller for the user profile page.
+     * @param {object} $stateParams - AngularJS state params
      * @param {object} Auth - Auth service
      * @param {object} User - User service
      */
     function UserProfileCtrl($stateParams, Auth, User) {
         var vm = this;
-
 
         // Data container for the profile data
         vm.profileData = {
@@ -35,6 +35,20 @@
             }
         });
 
+        /**
+         * Checks if the currently viewed profile is a friend of the user.
+         */
+        vm.isFriend = function() {
+            //DUMMY
+            return false;
+        };
+
+        /**
+         * Adds the user of the currently viewed profile to friends.
+         */
+        vm.addAsFriend = function() {
+            console.log("add as friend");
+        };
 
         ///////////////////////////////////////////////////////////////////////
     }

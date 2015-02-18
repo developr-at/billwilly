@@ -1,0 +1,28 @@
+<div class="well">
+    <div class="row">
+		<div class="col-sm-12">
+			<h1>Add Payment</h1>
+            <form novalidate id="addPaymentForm">
+                <div class="form-group" ng-class="{ 'has-error' : addPaymentForm.user.$invalid && payment.addPaymentSubmitted }">
+                    <label for="user">User</label>
+                    <input ng-model="payment.newPayment.user" type="text" class="form-control" name="user" id="user" placeholder="Enter ..." required>
+                    <ng-messages for="addPaymentForm.user.$error" ng-if="payment.addPaymentSubmitted">
+                        <ng-message when="required" class="help-block">...</ng-message>
+                    </ng-messages>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : addPaymentForm.amount.$invalid && payment.addPaymentSubmitted }">
+                    <label for="amount">Amount</label>
+                    <input ng-model="payment.newPayment.amount" type="text" class="form-control" name="amount" id="amount" placeholder="Enter ..." required>
+                    <ng-messages for="addPaymentForm.amount.$error" ng-if="payment.addPaymentSubmitted">
+                        <ng-message when="required" class="help-block">...</ng-message>
+                    </ng-messages>
+                </div>
+                <div class="row">
+                    <div class="col-sm-offset-7 col-sm-5">
+                        <button type="submit" class="btn btn-primary btn-block">Add</button>
+                    </div>
+                </div>
+            </form>
+		</div>
+	</div>
+</div>

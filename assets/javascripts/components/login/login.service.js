@@ -25,6 +25,11 @@
 
         ///////////////////////////////////////////////////////////////////////
 
+        /**
+         * Checks if the email address is already in use.
+         * @param {string} email - The email to check
+         * @return promise
+         */
         function checkEmail(email) {
             var deferred = $q.defer();
 
@@ -66,12 +71,18 @@
             });
         }
 
+        /**
+         * Logsout the current user and clears the user credentials.
+         */
         function logout() {
             service.currentUser = { _id: false };
             $cookieStore.remove('user');
             $http.get(API_BASE_PATH + 'auth/release');
         }
 
+        /**
+         * Indicates if the user is currently authenticated
+         */
         function isAuthenticated() {
             return !!service.currentUser._id;
         }

@@ -1,19 +1,25 @@
-<div class="row">
-    <div class="col-sm-12">
-        <div class="page-header">
+<div class="well">
+    <div class="row">
+        <div class="col-sm-12">
             <h1>Payments</h1>
-            <div class="jumbotron">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <h2>Owes you</h2>
-                        <div google-chart chart="payment.positiveChart" style="{{cssStyle}}"></div>
-                    </div>
-                    <div class="col-sm-6">
-                        <h2>You owe</h2>
-                        <div google-chart chart="payment.negativeChart" style="{{cssStyle}}"></div>
-                    </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <button type="button" class="btn btn-default" ui-sref="addPayment">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Payment
+                    </button>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <h2>Owes you</h2>
+                    <div google-chart chart="payment.positiveChart" style="{{cssStyle}}"></div>
+                </div>
+                <div class="col-sm-6">
+                    <h2>You owe</h2>
+                    <div google-chart chart="payment.negativeChart" style="{{cssStyle}}"></div>
+                </div>
+            </div>
+            <hr class="soften" />
             <div>
                 <table st-table="payment.payments" class="table table-striped">
                     <thead>

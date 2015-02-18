@@ -17,4 +17,7 @@ router.route('/check')
 router.route('/friends')
     .post(userController.getFriends);
 
+router.route('/friends/add')
+    .post(userController.addFriend);
+
 module.exports = router;

@@ -12,6 +12,19 @@
         vm.positiveChart = prepareChart(Payments.getPositivePayments());
         vm.negativeChart = prepareChart(Payments.getNegativePayments());
 
+        vm.addPaymentSubmitted = false;
+        vm.newPayment = {
+            user: '',
+            amount: 0
+        };
+
+        vm.addPayment = function() {
+
+        };
+
+
+        ///////////////////////////////////////////////////////////////////////
+
         /**
          * Prepares a chart object for angular google chart with the given
          * payments.

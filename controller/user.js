@@ -1,4 +1,5 @@
-var User = require('../models/User');
+var User = require('../models/User'),
+    async = require('async');
 
 module.exports = (function() {
     'use strict';
@@ -163,6 +164,8 @@ module.exports = (function() {
                     return next(err);
                 }
 
+                console.log(user);
+
                 if (user) {
                     return res.json({
                         message: null,
@@ -178,9 +181,13 @@ module.exports = (function() {
         var data = req.body;
         var currentUser = req.cookies.user;
 
-        if (currentUser._id === data.id || currentUser.admin) {
-            return next(new Error('Id parameter has to be id of your user or id of an admin user'), null);
-        }
+        // how to get current user????
+        // console.log(typeof currentUser);
+
+        // if (currentUser._id !== data.id || !currentUser.admin) {
+        //     console.log("err");
+        //     return next(new Error('Id parameter has to be id of your user or id of an admin user'), null);
+        // }
 
         async.parallel([
             function(callback) {
@@ -204,7 +211,9 @@ module.exports = (function() {
             },
             function(callback) {
                 // TODO: move User.findOne with friends to a separate module to reduce code
-                User.findOne({ _id: data.friendId })
+                // for now use friendmail
+                // User.findOne({ _id: data.friendId })
+                User.findOne({ email: data.friendEmail })
                     .populate({
                         path: 'friends',
                         match: { deleted: false }
@@ -227,10 +236,18 @@ module.exports = (function() {
                 return next(err);
             }
 
+            console.log(users);
+
             users[0].friends.push(users[1]);
             users[1].friends.push(users[0]);
             users[0].save();
             users[1].save();
+
+            console.log(users);
+
+            return res.json({
+                message: "Success"
+            });
         });
     }
 
