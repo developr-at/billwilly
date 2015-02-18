@@ -88,6 +88,13 @@ module.exports = function(grunt) {
             }
         },
 
+        karma: {
+            options: {
+                configFile: 'karma.conf.js',
+            },
+            background: true
+        },
+
         watch: {
             dev: {
                 files: [ 'Gruntfile.js', 'assets/javascripts/**/*.js', '*.html' ],
@@ -150,6 +157,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-concurrent');
     grunt.loadNpmTasks('grunt-shell-spawn');
     grunt.loadNpmTasks('grunt-jsdoc');
+    grunt.loadNpmTasks('grunt-karma');
 
     grunt.registerTask('dev', [ 'bower', 'copy', 'concurrent' ]);
+    grunt.registerTask('test', [ 'karma']);
 };
