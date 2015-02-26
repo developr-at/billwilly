@@ -6,6 +6,9 @@
  (function () {
     'use strict';
 
+    /**
+     * @namespace billwilly
+     */
     angular
         .module('app', [
             'app.core',
@@ -22,7 +25,7 @@
         .config(baseConfig)
         .run(accessControl)
         // Base path for calls to the rest api
-        .constant('API_BASE_PATH', '/api/v1/');
+        .constant('API_BASE_PATH', 'http://localhost:5858/api/v1/');
 
     /**
      * Basic configuration of the angular app.

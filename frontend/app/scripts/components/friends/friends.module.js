@@ -6,6 +6,10 @@
  (function () {
     'use strict';
 
+    /**
+     * @class billwilly.Friends
+     * @memberOf billwilly
+     */
     angular
         .module('app.friends', [
             'smart-table',
@@ -16,7 +20,10 @@
         .config(config);
 
     /**
-     * Configuration of the Friends Module
+     * @name config
+     * @function
+     * @memberOf billwilly.Friends
+     * @description Configuration of the Friends Module
      * @param {object} $stateProvider - AngularJS state provider
      */
     function config($stateProvider) {

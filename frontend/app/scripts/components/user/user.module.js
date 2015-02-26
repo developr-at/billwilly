@@ -6,12 +6,19 @@
  (function () {
     'use strict';
 
+    /**
+     * @class billwilly.User
+     * @memberOf billwilly
+     */
     angular
     	.module('app.user', [])
         .config(config);
 
     /**
-     * Configuration of the User Module
+     * @name config
+     * @function
+     * @memberOf billwilly.User
+     * @description Configuration of the User Module
      * @param {object} $stateProvider - AngularJS state provider
      */
     function config($stateProvider) {

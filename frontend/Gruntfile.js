@@ -9,6 +9,7 @@ module.exports = function(grunt) {
     var appConfig = {
         app: 'app',
         dist: 'dist',
+        doc: 'doc',
         libs: 'bower_components'
     };
 
@@ -33,6 +34,10 @@ module.exports = function(grunt) {
         clean: {
             dist: {
                 src: [ '<%= billwilly.dist %>']
+            },
+
+            doc: {
+                src: [ '<%= billwilly.doc %>']
             }
         },
 
@@ -193,4 +198,6 @@ module.exports = function(grunt) {
 
     grunt.registerTask('dev', [ 'bower', 'clean', 'copy', 'concurrent' ]);
     grunt.registerTask('test', [ 'karma']);
+
+    grunt.registerTask('doc', ['clean:doc', 'jsdoc']);
 };

@@ -11,7 +11,8 @@
         .controller('HeaderCtrl', HeaderCtrl);
 
     /**
-     * Controller for the header section.
+     * @class billwilly.Header.HeaderCtrl
+     * @description Controller for the header section.
      * @param {object} $state - AngularJS state
      * @param {object} User - User service
      */
@@ -23,7 +24,10 @@
         vm.getCurrentUser = Auth.getCurrentUser;
 
         /**
-         * Logs the user out of the app and redirects to the login page.
+         * @name logout
+         * @function
+         * @memberOf billwilly.Header.HeaderCtrl
+         * @description Logs the user out of the app and redirects to the login page.
          */
         function logout () {
             Auth.logout();

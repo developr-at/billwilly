@@ -6,6 +6,10 @@
  (function () {
     'use strict';
 
+    /**
+     * @class billwilly.Login
+     * @memberOf billwilly
+     */
     angular
         .module('app.login', [
             'ngMessages',
@@ -14,7 +18,10 @@
         .config(config);
 
     /**
-     * Configuration of the Login Module
+     * @name config
+     * @function
+     * @memberOf billwilly.Login
+     * @description Configuration of the Login Module
      * @param {object} $stateProvider - AngularJS state provider
      */
     function config($stateProvider) {

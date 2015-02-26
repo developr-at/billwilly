@@ -1,11 +1,20 @@
 (function () {
     'use strict';
 
+    /**
+     * @class billwilly.Login.Directives
+     * @description Login Directives...
+     */
     angular
         .module('app.login')
         .directive('compareTo', compareTo)
         .directive('uniqueEmail', uniqueEmail);
 
+    /**
+     * @name compareTo
+     * @function
+     * @memberOf billwilly.Login.Directives
+     */
     function compareTo() {
         return {
             require: "ngModel",
@@ -31,6 +40,11 @@
         };
     }
 
+    /**
+     * @name uniqueEmail
+     * @function
+     * @memberOf billwilly.Login.Directives
+     */
     function uniqueEmail(Auth) {
         return {
             restrict: 'A',

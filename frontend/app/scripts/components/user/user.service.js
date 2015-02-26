@@ -11,9 +11,10 @@
         .factory('User', User);
 
     /**
-     * User service manages logic concerning the users.
+     * @class billwilly.User.User
+     * @description User service manages logic concerning the users.
      * @param {object} $http - HTTP service to issue requests
-     * @param {object} Auth - Auth service
+     * @param {billwilly.Login.Auth} Auth - Auth service
      * @param {object} API_BASE_PATH - Base path for API requests
      */
     function User($http, Auth, API_BASE_PATH) {
@@ -35,6 +36,11 @@
 
         ///////////////////////////////////////////////////////////////////////
 
+        /**
+         * @name search
+         * @function
+         * @memberOf billwilly.User.User
+         */
         function search(searchTerm, callback) {
             // var request = $http.get(API_BASE_PATH + 'user/search', { search: searchTerm });
             // request.success(function(data, status, headers, config) {
@@ -47,7 +53,10 @@
         }
 
         /**
-         * Retrieves the profile data for a user.
+         * @name profile
+         * @function
+         * @memberOf billwilly.User.User
+         * @description Retrieves the profile data for a user.
          * @param {object} userData - Data of the user
          * @param {function} callback - Callback to call on success/failure
          */
@@ -63,7 +72,10 @@
         }
 
         /**
-         * Updates the profile data of the user.
+         * @name editProfile
+         * @function
+         * @memberOf billwilly.User.User
+         * @description Updates the profile data of the user.
          * @param {object} profileData - The update data of the profile
          * @param {function} callback - Callback to call on success/failure
          */
@@ -79,7 +91,10 @@
         }
 
         /**
-         * Adds a friend to the user.
+         * @name addFriend
+         * @function
+         * @memberOf billwilly.User.User
+         * @description Adds a friend to the user.
          * @param {int} userId - The id of the first user
          * @param {string} friendEmail - The mail of the friend to add
          * @param {function} callback - Callback to call on success/failure
@@ -98,7 +113,10 @@
         }
 
         /**
-         * Removes a friend from the user.
+         * @name removeFriend
+         * @function
+         * @memberOf billwilly.User.User
+         * @description Removes a friend from the user.
          * @param {int} userId - The id of the first user
          * @param {string} friendEmail - The mail of the friend to remove
          * @param {function} callback - Callback to call on success/failure
@@ -117,7 +135,10 @@
         }
 
         /**
-         * Retrieves a list of friends for the specified user.
+         * @name getFriends
+         * @function
+         * @memberOf billwilly.User.User
+         * @description Retrieves a list of friends for the specified user.
          * @param {int} userId - The id of the user to retrieve the friends of
          * @param {function} callback - Callback to call on success/failure
          */

@@ -6,7 +6,8 @@
         .controller('LoginCtrl', LoginCtrl);
 
     /**
-     * Controller for the login/register page.
+     * @class billwilly.Login.LoginCtrl
+     * @description Controller for the login/register page.
      * @param {object} $state - AngularJS state
      * @param {object} Auth - Auth service
      */
@@ -38,7 +39,10 @@
         };
 
         /**
-         * Submit handler of the login form.
+         * @name submitLogin
+         * @function
+         * @memberOf billwilly.Login.LoginCtrl
+         * @description Submit handler of the login form.
          * @param {boolean} isValid - Flag indicating if the form values are valid
          */
         vm.submitLogin = function(isValid) {
@@ -58,7 +62,10 @@
         };
 
         /**
-         * Submit handler of the registration form.
+         * @name submitRegistration
+         * @function
+         * @memberOf billwilly.Login.LoginCtrl
+         * @description Submit handler of the registration form.
          * @param {boolean} isValid - Flag indicating if the form values are valid
          */
         vm.submitRegistration = function(isValid) {

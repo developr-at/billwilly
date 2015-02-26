@@ -6,7 +6,8 @@
         .controller('FriendsCtrl', FriendsCtrl);
 
     /**
-     * Controller for the friends page.
+     * @class billwilly.Friends.FriendsCtrl
+     * @description Controller for the friends page.
      * @param {object} Payments - Payments service
      * @param {object} User - User service
      */
@@ -53,6 +54,11 @@
 
         ///////////////////////////////
 
+        /**
+         * @name addPersonAsFriend
+         * @function
+         * @memberOf billwilly.Friends.FriendsCtrl
+         */
         function addPersonAsFriend(userId) {
             console.log("addPersonAsFriend" + userId);
             // User.addFriend(..., function(err, data) {
@@ -60,11 +66,21 @@
             // });
         }
 
+        /**
+         * @name isAlreadyFriend
+         * @function
+         * @memberOf billwilly.Friends.FriendsCtrl
+         */
         function isAlreadyFriend(userId) {
             console.log("isAlreadyFriend" + userId);
             return false;
         }
 
+        /**
+         * @name searchPerson
+         * @function
+         * @memberOf billwilly.Friends.FriendsCtrl
+         */
         function searchPerson() {
             User.search(vm.searchTerm, function() {
                 vm.searchResult = [

@@ -11,7 +11,8 @@
         .controller('ProfileCtrl', ProfileCtrl);
 
     /**
-     * Controller for the profile page.
+     * @class billwilly.User.ProfileCtrl
+     * @description Controller for the profile page.
      * @param {object} Auth - Auth service
      * @param {object} User - User service
      */
@@ -40,7 +41,10 @@
         ///////////////////////////////////////////////////////////////////////
 
         /**
-         * Submit handler of the profile form.
+         * @name submitProfileChanges
+         * @function
+         * @memberOf billwilly.User.ProfileCtrl
+         * @description Submit handler of the profile form.
          * @param {boolean} isValid - Flag indicating if the form values are valid
          */
         vm.submitProfileChanges = function(isValid) {
