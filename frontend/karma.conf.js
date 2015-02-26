@@ -14,15 +14,16 @@ module.exports = function(config) {
         // list of files / patterns to load in the browser
         files: [
 
-          'bower_components/angular/angular.js',
-          'bower_components/angular-mocks/angular-mocks.js',
+          // 'bower_components/angular/angular.js',
 
+          'dist/scripts/libraries.js',
           'dist/scripts/main.js',
           'dist/scripts/modules.js',
           'dist/scripts/services.js',
           'dist/scripts/controllers.js',
           'dist/scripts/directives.js',
           // 'public/javascripts/*.js',
+          'bower_components/angular-mocks/angular-mocks.js',
           // 'test/mock/**/*.js',
           'test/spec/**/*.js'
         ],

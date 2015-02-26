@@ -23,11 +23,14 @@
         vm.isAuthenticated = Auth.isAuthenticated;
         vm.getCurrentUser = Auth.getCurrentUser;
 
+        ///////////////////////////////////////////////////////////////////////
+
         /**
          * @name logout
          * @function
          * @memberOf billwilly.Header.HeaderCtrl
-         * @description Logs the user out of the app and redirects to the login page.
+         * @description Logs the user out of the app and redirects to the
+         * login page.
          */
         function logout () {
             Auth.logout();

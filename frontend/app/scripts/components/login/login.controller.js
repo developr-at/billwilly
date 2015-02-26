@@ -34,9 +34,15 @@
             secondPassword: ''
         };
 
-        vm.currentUser = function() {
+        vm.currentUser = currentUser;
+        vm.submitLogin = submitLogin;
+        vm.submitRegistration = submitRegistration;
+
+        ///////////////////////////////////////////////////////////////////////
+
+        function currentUser() {
             return Auth.currentUser;
-        };
+        }
 
         /**
          * @name submitLogin
@@ -45,7 +51,7 @@
          * @description Submit handler of the login form.
          * @param {boolean} isValid - Flag indicating if the form values are valid
          */
-        vm.submitLogin = function(isValid) {
+        function submitLogin(isValid) {
             vm.loginSubmitted = true;
 
             if (isValid) {
@@ -59,7 +65,7 @@
                     console.log(user);
                 });
             }
-        };
+        }
 
         /**
          * @name submitRegistration
@@ -68,7 +74,7 @@
          * @description Submit handler of the registration form.
          * @param {boolean} isValid - Flag indicating if the form values are valid
          */
-        vm.submitRegistration = function(isValid) {
+        function submitRegistration(isValid) {
             vm.registrationSubmitted = true;
 
             if (isValid) {
@@ -82,7 +88,7 @@
                     console.log(user);
                 });
             }
-        };
+        }
     }
 
     LoginCtrl.$inject = [ '$state', 'Auth' ];

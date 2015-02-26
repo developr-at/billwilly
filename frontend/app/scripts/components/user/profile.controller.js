@@ -38,6 +38,8 @@
             }
         });
 
+        vm.submitProfileChanges = submitProfileChanges;
+
         ///////////////////////////////////////////////////////////////////////
 
         /**
@@ -47,7 +49,7 @@
          * @description Submit handler of the profile form.
          * @param {boolean} isValid - Flag indicating if the form values are valid
          */
-        vm.submitProfileChanges = function(isValid) {
+        function submitProfileChanges(isValid) {
             vm.profileSubmitted = true;
 
             if (isValid) {
@@ -55,7 +57,7 @@
 
                 });
             }
-        };
+        }
     }
 
     ProfileCtrl.$inject = [ 'Auth', 'User' ];
