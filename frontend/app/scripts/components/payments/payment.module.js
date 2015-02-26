@@ -21,14 +21,14 @@
         // Payments Overview page
         $stateProvider.state('payments', {
             url: '/payments',
-            templateUrl: 'views/payments.ejs',
+            templateUrl: 'views/payments.html',
             controller: 'PaymentCtrl as payment'
         });
 
         // Add Payments page
         $stateProvider.state('addPayment', {
             url: '/payments/add',
-            templateUrl: 'views/addPayment.ejs',
+            templateUrl: 'views/addPayment.html',
             controller: 'PaymentCtrl as payment'
         });
     }

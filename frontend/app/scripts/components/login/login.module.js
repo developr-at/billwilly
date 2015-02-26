@@ -21,7 +21,7 @@
         // Login page
         $stateProvider.state('login', {
             url: '/login',
-            templateUrl: 'views/login.ejs',
+            templateUrl: 'views/login.html',
             controller: 'LoginCtrl as login',
             restricted: false
         });
@@ -29,7 +29,7 @@
         // Register page
         $stateProvider.state('register', {
             url: '/register',
-            templateUrl: 'views/register.ejs',
+            templateUrl: 'views/register.html',
             controller: 'LoginCtrl as login',
             restricted: false
         });
@@ -37,7 +37,7 @@
         // Register Success page
         $stateProvider.state('registerSuccess', {
             url: '/register/success',
-            templateUrl: 'views/registerSuccess.ejs',
+            templateUrl: 'views/registerSuccess.html',
             controller: 'LoginCtrl as login',
             restricted: true
         });

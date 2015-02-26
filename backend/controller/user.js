@@ -30,6 +30,8 @@ module.exports = (function() {
     function check(req, res, next) {
         var data = req.body;
 
+        console.log("CHECK");
+
         User.findOne({ email: data.email }, function(err, user) {
             if (err) {
                 return next(err);

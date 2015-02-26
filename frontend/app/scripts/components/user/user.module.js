@@ -18,14 +18,14 @@
         // Profile page
         $stateProvider.state('profile', {
             url: '/profile',
-            templateUrl: 'views/profile.ejs',
+            templateUrl: 'views/profile.html',
             controller: 'ProfileCtrl as profile'
         });
 
         // Other user profile page
         $stateProvider.state('userProfile', {
             url: '/user/:userId',
-            templateUrl: 'views/user.ejs',
+            templateUrl: 'views/user.html',
             controller: 'UserProfileCtrl as profile'
         });
     }

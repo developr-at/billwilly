@@ -22,7 +22,7 @@
     function config($stateProvider) {
         $stateProvider.state('friends', {
             url: '/friends',
-            templateUrl: 'views/friends.ejs',
+            templateUrl: 'views/friends.html',
             controller: 'FriendsCtrl as friends'
         });
     }
