@@ -197,7 +197,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-karma');
 
     grunt.registerTask('dev', [ 'bower', 'clean', 'copy', 'concurrent' ]);
-    grunt.registerTask('test', [ 'karma']);
+    grunt.registerTask('test', [ 'karma' ]);
 
-    grunt.registerTask('doc', ['clean:doc', 'jsdoc']);
+    grunt.registerTask('doc', [ 'clean:doc', 'jsdoc' ]);
 };
