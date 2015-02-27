@@ -45,6 +45,10 @@ passport.deserializeUser(function(id, done) {
     });
 });
 
+/**
+ * Authentication Controller
+ * @module controller/authentication
+ */
 module.exports = (function () {
     'use strict';
 
@@ -57,7 +61,13 @@ module.exports = (function () {
 
     ///////////////////////////////////////////////////////////////////////////
 
-
+    /**
+     * isAuthenticated
+     * @alias module:controller/authentication.isAuthenticated
+     * @param {object} req
+     * @param {object} res
+     * @param {object} next
+     */
     function isAuthenticated(req, res, next) {
         return passport.authenticate('local', function(err, user, info) {
             if (err) {
@@ -83,6 +93,13 @@ module.exports = (function () {
         })(req, res, next);
     }
 
+    /**
+     * logout
+     * @alias module:controller/authentication.logout
+     * @param {object} req
+     * @param {object} res
+     * @param {object} next
+     */
     function logout(req, res, next) {
         req.logout();
         res.redirect('/');

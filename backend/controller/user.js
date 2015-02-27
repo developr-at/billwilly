@@ -1,6 +1,10 @@
 var User = require('../models/User'),
     async = require('async');
 
+/**
+ * User Controller
+ * @module controller/user
+ */
 module.exports = (function() {
     'use strict';
 
@@ -27,6 +31,13 @@ module.exports = (function() {
 
     ///////////////////////////////////////////////////////////////////////////
 
+    /**
+     * Checks if a given mail is already in use.
+     * @alias module:controller/user.check
+     * @param {object} req
+     * @param {object} res
+     * @param {object} next
+     */
     function check(req, res, next) {
         var data = req.body;
 
@@ -49,6 +60,13 @@ module.exports = (function() {
         });
     }
 
+    /**
+     * profile
+     * @alias module:controller/user.profile
+     * @param {object} req
+     * @param {object} res
+     * @param {object} next
+     */
     function profile(req, res, next) {
         var data = req.body,
             query = {};
@@ -82,6 +100,14 @@ module.exports = (function() {
         });
     }
 
+
+    /**
+     * editProfile
+     * @alias module:controller/user.editProfile
+     * @param {object} req
+     * @param {object} res
+     * @param {object} next
+     */
     function editProfile(req, res, next) {
         var data = req.body;
 
@@ -100,6 +126,13 @@ module.exports = (function() {
         })
     }
 
+    /**
+     * register
+     * @alias module:controller/user.register
+     * @param {object} req
+     * @param {object} res
+     * @param {object} next
+     */
     function register(req, res, next) {
         // do sth.
         console.log(req.body);
@@ -144,14 +177,35 @@ module.exports = (function() {
         });
     }
 
+    /**
+     * remove
+     * @alias module:controller/user.remove
+     * @param {object} req
+     * @param {object} res
+     * @param {object} next
+     */
     function remove(req, res, next) {
         // do sth.
     }
 
+    /**
+     * update
+     * @alias module:controller/user.update
+     * @param {object} req
+     * @param {object} res
+     * @param {object} next
+     */
     function update(req, res, next) {
         // do sth.
     }
 
+    /**
+     * getFriends
+     * @alias module:controller/user.getFriends
+     * @param {object} req
+     * @param {object} res
+     * @param {object} next
+     */
     function getFriends(req, res, next) {
         var data = req.body;
 
@@ -179,6 +233,13 @@ module.exports = (function() {
             });
     }
 
+    /**
+     * addFriend
+     * @alias module:controller/user.addFriend
+     * @param {object} req
+     * @param {object} res
+     * @param {object} next
+     */
     function addFriend(req, res, next) {
         var data = req.body;
         var currentUser = req.cookies.user;
@@ -253,6 +314,13 @@ module.exports = (function() {
         });
     }
 
+    /**
+     * removeFriend
+     * @alias module:controller/user.removeFriend
+     * @param {object} req
+     * @param {object} res
+     * @param {object} next
+     */
     function removeFriend(req, res, next) {
         // do sth.
     }
