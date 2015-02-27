@@ -1,22 +1,52 @@
 var User = require('../models/User');
 
-exports.initAdminUser = function() {
-	User.findOne({ email: 'admin@billwilly.com' }, function(err, user) {
-		if (err) {
-			// @TODO: log error
-			console.log(err);
-		}
+/**
+ * Database Initialization
+ * @module init/db
+ */
+module.exports = (function () {
+    'use strict';
 
-		if (!user) {
-			var admin = new User({
-				email: 'admin@billwilly.com',
-				password: 'bill?willy3'
-			});
-			admin.save();
-		}
-	});
-};
+    var module = {
+        init: init,
+        initAdminUser: initAdminUser
+    };
 
-exports.init = function() {
-	this.initAdminUser();
-};
+    return module;
+
+    ///////////////////////////////////////////////////////////////////////////
+
+
+    /**
+     * init
+     * @alias module:init/db.init
+     */
+    function init () {
+        module.initAdminUser();
+    }
+
+    /**
+     * initAdminUser
+     * @alias module:init/db.initAdminUser
+     */
+    function initAdminUser () {
+        var ADMIN_EMAIL = 'admin@billwilly.com',
+            ADMIN_PASSWORD = 'bill?willy3';
+
+        User.findOne({ email: ADMIN_EMAIL }, function(err, user) {
+            if (err) {
+                // @TODO: log error
+                console.log(err);
+            }
+
+            if (!user) {
+                var admin = new User({
+                    email: ADMIN_EMAIL,
+                    password: ADMIN_PASSWORD
+                });
+
+                admin.save();
+            }
+        });
+    }
+})();
