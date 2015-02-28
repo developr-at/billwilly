@@ -25,7 +25,7 @@
         .config(baseConfig)
         .run(accessControl)
         // Base path for calls to the rest api
-        .constant('API_BASE_PATH', 'http://localhost:5858/api/v1/');
+        .constant('API_BASE_PATH', 'http://localhost:3333/api/v1/');
 
     /**
      * Basic configuration of the angular app.
