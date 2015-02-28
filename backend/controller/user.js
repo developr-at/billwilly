@@ -42,17 +42,15 @@ module.exports = (function() {
     function check(req, res, next) {
         var data = req.body;
 
-        console.log("CHECK");
-
         User
             .find({ where: { email: data.email } })
             .then(function(user) {
                 if (user) {
-                    return res.json({
+                    res.json({
                         success: false
                     });
                 } else {
-                    return res.status(404).json({
+                    res.status(404).json({
                         success: true
                     });
                 }
@@ -73,30 +71,21 @@ module.exports = (function() {
         if ( data.email )
             query.email = data.email;
         else if ( data.id )
-            query._id = data.id;
+            query.id = data.id;
 
-        console.log(data);
-        console.log(query);
-
-        User.findOne(query, function(err, user) {
-            if (err) {
-                return next(err);
-            }
-
-            if (user) {
-                return res.json({
-                    user: {
-                        firstname: user.firstname,
-                        lastname: user.lastname,
-                        email: user.email
-                    }
-                });
-            } else {
-                return res.status(404).json({
-                    message: "User not found"
-                });
-            }
-        });
+        User
+            .find({ where: query })
+            .then(function(user) {
+                if (user) {
+                    res.json({
+                        user: res.filter([ 'id', 'firstname', 'lastname', 'email' ], user.dataValues)
+                    });
+                } else {
+                    res.status(404).json({
+                        message: "User not found"
+                    });
+                }
+            });
     }
 
 
@@ -110,18 +99,30 @@ module.exports = (function() {
     function editProfile(req, res, next) {
         var data = req.body;
 
-        User.findOne({ email: data.email }, function(err, user) {
-            if (err) {
-                return next(err);
-            }
-
-            if (user) {
-                // Update data
-                user.firstname = data.firstname;
-                user.lastname = data.lastname;
-            } else {
-                // ...
-            }
+        User
+            .find({ where: { email: data.email } })
+            .then(function(user) {
+                if (user) {
+                    // Update data
+                    user.updateAttributes({
+                            firstname: data.firstname,
+                            lastname: data.lastname
+                        })
+                        .success(function () {
+                            res.json({
+                                success: false
+                            });
+                        })
+                        .error(function () {
+                            res.status(404).json({
+                                success: true
+                            });
+                        });
+                } else {
+                    res.status(404).json({
+                        message: "User not found"
+                    });
+                }
         })
     }
 
@@ -133,47 +134,40 @@ module.exports = (function() {
      * @param {object} next
      */
     function register(req, res, next) {
-        // do sth.
-        console.log(req.body);
-
         // @TODO: Add basic validation
         var data = req.body;
 
-        User.findOne({ email: data.email }, function(err, user) {
-            if (err) {
-                return next(err);
-            }
+        User
+            .find({ where: { email: data.email } })
+            .then(function(user) {
+                if (user) {
+                    next(new Error('User with email ' + data.email) + ' already exists');
+                } else {
+                    User.create({
+                            firstname: data.firstname,
+                            lastname: data.lastname,
+                            email: data.email,
+                            password: data.firstPassword
+                        })
+                        .then(function (newUser) {
+                            if (newUser) {
+                                req.logIn(newUser, function (err) {
+                                    if (err) {
+                                        return next(err);
+                                    }
 
-            if (user) {
-                return next(new Error('User with email ' + data.email) + ' already exists');
-            } else {
-                var newUser = new User({
-                    firstname: data.firstname,
-                    lastname: data.lastname,
-                    email: data.email,
-                    password: data.firstPassword
-                });
-
-                newUser.save(function (err) {
-                    if (err) {
-                        // @TODO: log error
-                        console.log(err);
-                        return next(err);
-                    }
-
-                    req.logIn(newUser, function (err) {
-                        if (err) {
-                            return next(err);
-                        }
-
-                        return res.json({
-                            message: "Registration successfull",
-                            user: newUser
+                                    return res.json({
+                                        message: "Registration successfull",
+                                        user:  res.filter([ 'id', 'firstname', 'lastname', 'email' ], newUser.dataValues)
+                                    });
+                                })
+                            } else {
+                                console.log(err);
+                                next(err);
+                            }
                         });
-                    });
-                });
-            }
-        });
+                }
+            });
     }
 
     /**
@@ -209,7 +203,7 @@ module.exports = (function() {
         var data = req.body;
 
         // TODO: move User.findOne with friends to a separate module to reduce code
-        User.findOne({ _id: data.id })
+        User.findOne({ id: data.id })
             .populate({
                 path: 'friends',
                 match: { deleted: false }
@@ -243,14 +237,14 @@ module.exports = (function() {
         var data = req.body;
         var currentUser = req.cookies.user;
 
-        if (currentUser._id !== data.id && !currentUser.admin) {
+        if (currentUser.id !== data.id && !currentUser.admin) {
             return next(new Error('Id parameter has to be id of your user or id of an admin user'), null);
         }
 
         async.parallel([
             function(callback) {
                 // TODO: move User.findOne with friends to a separate module to reduce code
-                User.findOne({ _id: data.id })
+                User.findOne({ id: data.id })
                     .populate({
                         path: 'friends',
                         match: { deleted: false }
@@ -270,7 +264,7 @@ module.exports = (function() {
             function(callback) {
                 // TODO: move User.findOne with friends to a separate module to reduce code
                 // for now use friendmail
-                // User.findOne({ _id: data.friendId })
+                // User.findOne({ id: data.friendId })
                 User.findOne({ email: data.friendEmail })
                     .populate({
                         path: 'friends',

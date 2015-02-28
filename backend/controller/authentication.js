@@ -85,9 +85,10 @@ module.exports = (function () {
                 if (err) {
                   return next(err);
                 }
+
                 return res.json({
-                  message: null,
-                  user: req.user
+                    message: null,
+                    user: res.filter([ 'id', 'firstname', 'lastname', 'email' ], req.user.dataValues)
                 });
             });
         })(req, res, next);

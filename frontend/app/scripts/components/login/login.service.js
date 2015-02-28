@@ -26,7 +26,7 @@
 
             // Helper
             'isAuthenticated': isAuthenticated,
-            'currentUser': $cookieStore.get('user') || { _id: false },
+            'currentUser': $cookieStore.get('user') || { id: false },
             'getCurrentUser': getCurrentUser
         };
 
@@ -106,7 +106,7 @@
          * @description Logsout the current user and clears the user credentials.
          */
         function logout() {
-            service.currentUser = { _id: false };
+            service.currentUser = { id: false };
             $cookieStore.remove('user');
             $http.get(API_BASE_PATH + 'auth/release');
         }
@@ -118,7 +118,7 @@
          * @description Indicates if the user is currently authenticated
          */
         function isAuthenticated() {
-            return !!service.currentUser._id;
+            return !!service.currentUser.id;
         }
 
         /**

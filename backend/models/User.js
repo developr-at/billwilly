@@ -66,7 +66,7 @@ module.exports = (function() {
             }
         },
         instanceMethods: {
-            verfiyPassword: function(password, next) {
+            verifyPassword: function(password, next) {
                 bcrypt.compare(password, this.password, function(err, isMatch) {
                     if (err) {
                         return next(err);

@@ -56,6 +56,22 @@ module.exports = (function () {
             resave: false,
             saveUninitialized: true
         }));
+
+        app.use(function(req, res, next) {
+            res.filter = function (columns, object) {
+                var filtered = {},
+                    idx;
+
+                for ( idx = 0; idx < columns.length; ++idx ) {
+                    if ( object.hasOwnProperty(columns[idx]) ) {
+                        filtered[columns[idx]] = object[columns[idx]];
+                    }
+                }
+
+                return filtered;
+            };
+            next();
+        });
     }
 
     function initializeAuthentication() {
