@@ -1,5 +1,4 @@
-var mongoose = require('mongoose'),
-    sequelize = require('../db/sequelize'),
+var sequelize = require('../db/sequelize'),
     Sequelize = require('Sequelize');
 
 /**
