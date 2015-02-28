@@ -24,7 +24,8 @@ module.exports = (function() {
         // friends
         getFriends: getFriends,
         addFriend: addFriend,
-        removeFriend: removeFriend
+        removeFriend: removeFriend,
+        findFriend: findFriend
     };
 
     return module;
@@ -244,13 +245,9 @@ module.exports = (function() {
         var data = req.body;
         var currentUser = req.cookies.user;
 
-        // how to get current user????
-        // console.log(typeof currentUser);
-
-        // if (currentUser._id !== data.id || !currentUser.admin) {
-        //     console.log("err");
-        //     return next(new Error('Id parameter has to be id of your user or id of an admin user'), null);
-        // }
+        if (currentUser._id !== data.id && !currentUser.admin) {
+            return next(new Error('Id parameter has to be id of your user or id of an admin user'), null);
+        }
 
         async.parallel([
             function(callback) {
@@ -323,6 +320,10 @@ module.exports = (function() {
      */
     function removeFriend(req, res, next) {
         // do sth.
+    }
+
+    function findFriend(req, res, next) {
+
     }
 
 })();
