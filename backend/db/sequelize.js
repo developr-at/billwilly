@@ -1,9 +1,20 @@
 var Sequelize = require('Sequelize');
 
-console.log('connecting to database');
-var sequelize = new Sequelize('billwilly', 'billwilly', '', {
-    host: 'localhost',
-    dialect: 'mysql'
-});
+/**
+ * Database Initialization with Sequelize ORM
+ * @module db/sequelize
+ */
+module.exports = (function() {
+    var dbConfig = {
+        hostname: 'localhost',
+        database: 'billwilly',
+        username: 'billwilly',
+        password: '',
+        dialect: 'mysql'
+    };
 
-module.exports = sequelize;
+    return new Sequelize(dbConfig.database, dbConfig.username, '', {
+        host: dbConfig.hostname,
+        dialect: dbConfig.dialect
+    });
+})();

@@ -1,77 +1,81 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
+var Sequelize = require('Sequelize');
 var sequelize = require('../db/sequelize');
 
-sequelize.define('User', {
-
-}, {
-    timestamps: true,
-    paranoid: true,
-    underscored: true,
-    freezeTableName: true,
-    tableName: 'bw_user'
-});
-
-var UserSchema = new mongoose.Schema({
-    firstname: String,
-    lastname: String,
-    email: {
-        type: String,
-        unique: true,
-        required: true
-    },
-
-    password: {
-        type: String,
-        required: true
-    },
-
-    salt: String,
-
-    admin: Boolean,
-    deleted: Boolean,
-
-    friends: [{
-        type: mongoose.Schema.ObjectId,
-        ref: 'User'
-    }],
-
-    lastLogin: { type: Date, default: Date.now },
-    updated: { type: Date, default: Date.now },
-    created: { type: Date, default: Date.now }
-});
-
-UserSchema.pre('save', function(callback) {
-    var user = this;
-
-    if (!user.isModified('password')) {
-        return callback();
-    }
-
-    bcrypt.genSalt(5, function(err, salt) {
-        if (err) {
-            return callback(err);
-        }
-
-        bcrypt.hash(user.password, salt, null, function(err, hash) {
-            if (err) {
-                return callback(err);
+module.exports = (function() {
+    var User = sequelize.define('User', {
+        firstname: {
+            type: Sequelize.STRING
+        },
+        lastname: {
+            type: Sequelize.STRING
+        },
+        email: {
+            type: Sequelize.STRING,
+            unique: true,
+            validate: {
+                isEmail: true,
+                notEmpty: true
             }
-            user.password = hash;
-            callback();
-        });
-    });
-});
-
-UserSchema.methods.verifyPassword = function(password, callback) {
-    bcrypt.compare(password, this.password, function(err, isMatch) {
-        if (err) {
-            return callback(err);
+        },
+        password: {
+            type: Sequelize.STRING,
+            validate: {
+                notEmpty: true
+            }
+        },
+        salt: {
+            type: Sequelize.STRING
+        },
+        admin: {
+            type: Sequelize.BOOLEAN
+        },
+        lastLogin: {
+            type: Sequelize.DATE
         }
-        callback(null, isMatch);
+    }, {
+        timestamps: true,
+        paranoid: true,
+        underscored: true,
+        freezeTableName: true,
+        tableName: 'bw_user',
+        hooks: {
+            beforeCreate: function(user, next) {
+
+                if (!user.changed('password')) {
+                    return next();
+                }
+
+                bcrypt.genSalt(5, function(err, salt) {
+                    if (err) {
+                        return next(err);
+                    }
+
+                    bcrypt.hash(user.password, salt, null, function(err, hash) {
+                        if (err) {
+                            return next(err);
+                        }
+                        user.password = hash;
+                        next();
+                    });
+                });
+            }
+        },
+        instanceMethods: {
+            verfiyPassword: function(password, next) {
+                bcrypt.compare(password, this.password, function(err, isMatch) {
+                    if (err) {
+                        return next(err);
+                    }
+                    next(null, isMatch);
+                });
+            }
+        }
     });
-};
 
-sequelize.sync();
+    User.belongsToMany(User, { as: 'friends', through: 'bw_friend' });
+    sequelize.sync();
+    return User;
 
-module.exports = mongoose.model('User', UserSchema);
+})();
