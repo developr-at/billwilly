@@ -32,7 +32,9 @@ module.exports = (function() {
             }
         },
         admin: {
-            type: Sequelize.BOOLEAN
+            type: Sequelize.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
         },
         lastLogin: {
             type: Sequelize.DATE
