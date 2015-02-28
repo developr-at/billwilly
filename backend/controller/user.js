@@ -44,21 +44,19 @@ module.exports = (function() {
 
         console.log("CHECK");
 
-        User.findOne({ email: data.email }, function(err, user) {
-            if (err) {
-                return next(err);
-            }
-
-            if (user) {
-                return res.json({
-                    success: false
-                });
-            } else {
-                return res.status(404).json({
-                    success: true
-                });
-            }
-        });
+        User
+            .find({ where: { email: data.email } })
+            .then(function(user) {
+                if (user) {
+                    return res.json({
+                        success: false
+                    });
+                } else {
+                    return res.status(404).json({
+                        success: true
+                    });
+                }
+            });
     }
 
     /**
