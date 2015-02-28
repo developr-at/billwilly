@@ -1,0 +1,43 @@
+<div class="well">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>Payments</h1>
+            <div class="row">
+                <div class="col-sm-12">
+                    <button type="button" class="btn btn-default" ui-sref="addPayment">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Payment
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <h2>Owes you</h2>
+                    <div google-chart chart="payment.positiveChart" style="{{cssStyle}}"></div>
+                </div>
+                <div class="col-sm-6">
+                    <h2>You owe</h2>
+                    <div google-chart chart="payment.negativeChart" style="{{cssStyle}}"></div>
+                </div>
+            </div>
+            <hr class="soften" />
+            <div>
+                <table st-table="payment.payments" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="pm in payment.payments">
+                            <td>{{ pm.fromUser.firstname }}</td>
+                            <td>{{ pm.toUser.firstname }}</td>
+                            <td>{{ pm.amount | currency:pm.currency.name:2 }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

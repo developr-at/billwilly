@@ -1,0 +1,14 @@
+<div class="well">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>{{ profile.profileData.firstname }} {{ profile.profileData.lastname }}</h1>
+            <span ng-hide="profile.isFriend()">
+                <p>This user is currenty not your friend. Do you want to add "{{ profile.profileData.firstname }} {{ profile.profileData.lastname }}" to your friends?</p>
+                <button class="btn btn-primary" ng-click="profile.addAsFriend()">Yes, add to friends</button>
+            <span>
+            <span ng-show="profile.isFriend()">
+
+            </span>
+        </div>
+    </div>
+</div>

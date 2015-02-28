@@ -1,0 +1,40 @@
+<div class="well">
+    <h1>Profile</h1>
+    <form class="form-horizontal" name="profileForm" role="form" ng-submit="profile.submitProfileChanges(profileForm.$valid)" novalidate>
+        <div class="alert alert-danger" role="alert" ng-if="message">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span>
+            {{ profile.message }}
+        </div>
+
+        <div class="form-group" ng-class="{ 'has-error' : profileForm.firstname.$invalid && profile.profileSubmitted }">
+            <label class="col-sm-3" for="firstname">Firstname</label>
+            <div class="col-sm-9">
+                <input ng-model="profile.profileData.firstname" type="text" class="form-control" name="firstname" id="firstname" placeholder="Enter Firstname" required>
+                <ng-messages for="profileForm.firstname.$error" ng-if="profile.profileSubmitted">
+                    <ng-message when="required" class="help-block">Please provide a firstname.</ng-message>
+                </ng-messages>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error' : profileForm.lastname.$invalid && profile.profileSubmitted }">
+            <label class="col-sm-3" for="lastname">Lastname</label>
+            <div class="col-sm-9">
+                <input ng-model="profile.profileData.lastname" type="text" class="form-control" name="lastname" id="lastname" placeholder="Enter Lastname" required>
+                <ng-messages for="profileForm.lastname.$error" ng-if="profile.profileSubmitted">
+                    <ng-message when="required" class="help-block">Please provide a lastname.</ng-message>
+                </ng-messages>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error' : profileForm.email.$invalid && profile.profileSubmitted }">
+            <label class="col-sm-3" for="email">Email address</label>
+            <div class="col-sm-9">
+                <input ng-model="profile.profileData.email" type="email" class="form-control" name="email" id="email" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-3">
+                <button type="submit" class="btn btn-primary btn-block">Save Changes</button>
+            </div>
+        </div>
+    </form>
+</div>

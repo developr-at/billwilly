@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+        <div class="well login-well">
+            <h1>Login</h1>
+
+            <form name="loginForm" role="form" ng-submit="login.submitLogin(loginForm.$valid)" novalidate>
+                <div class="alert alert-danger" role="alert" ng-if="login.message">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <span class="sr-only">Error:</span>
+                    {{ login.message }}
+                </div>
+
+                <div class="form-group" ng-class="{ 'has-error' : loginForm.email.$invalid && login.loginSubmitted }">
+                    <label for="inputEmail">Email address</label>
+                    <input ng-model="login.credentials.email" type="email" name="email" class="form-control" id="inputEmail" placeholder="Enter email" required>
+                    <ng-messages for="loginForm.email.$error" ng-if="login.loginSubmitted">
+                        <ng-message when="email" class="help-block">Please enter a valid email adress.</ng-message>
+                        <ng-message when="required" class="help-block">Please provide an email.</ng-message>
+                    </ng-messages>
+                </div>
+                <div class="form-group" ng-class="{ 'has-error' : loginForm.password.$invalid && login.loginSubmitted }">
+                    <label for="inputPassword">Password</label>
+                    <input ng-model="login.credentials.password" type="password" name="password" class="form-control" id="inputPassword" placeholder="Password" required ng-minlength="8" ng-maxlength="16">
+                    <ng-messages for="loginForm.password.$error" ng-if="login.loginSubmitted">
+                        <ng-message when="minlength" class="help-block">Password must be 8 - 16 characters long.</ng-message>
+                        <ng-message when="maxlength" class="help-block">Password must be 8 - 16 characters long.</ng-message>
+                        <ng-message when="required" class="help-block">Please provide a password.</ng-message>
+                    </ng-messages>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input ng-model="login.credentials.remember" type="checkbox"> Remember me
+                    </label>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <a class="register-link" ui-sref="register">New here? Register!</a>
+                    </div>
+                    <div class="col-sm-offset-1 col-sm-5">
+                        <button type="submit" class="btn btn-primary btn-block">Login</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
