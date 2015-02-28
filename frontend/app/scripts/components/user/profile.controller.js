@@ -53,6 +53,7 @@
             vm.profileSubmitted = true;
 
             if (isValid) {
+                console.log(vm.profileData);
                 User.editProfile(vm.profileData, function (err, data) {
 
                 });

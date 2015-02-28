@@ -8,7 +8,6 @@ var passport = require('passport');
 var debug = require('debug')('billwilly');
 
 // Load Route Definitions
-var routes = require('./routes/index');
 var users = require('./routes/users');
 var auth = require('./routes/authentication');
 
@@ -66,7 +65,6 @@ module.exports = (function () {
 
     function initializeApiRoutes() {
         app.use('/api/' + API_VERSION + '/auth', auth);
-        app.use('/api/' + API_VERSION, routes);
         app.use('/api/' + API_VERSION  + '/users', users);
     }
 

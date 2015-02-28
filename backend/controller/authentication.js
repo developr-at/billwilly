@@ -7,31 +7,29 @@ passport.use(new LocalStrategy({
         passwordField: 'password'
     },
     function(email, password, callback) {
-        User.findOne({ email: email }, function (err, user) {
-            if (err) {
-                return callback(err, false, { message: err });
-            }
-
-            // No user found with that email
-            if (!user) {
-                return callback(null, false, { message: 'Invalid credentials' });
-            }
-
-            // Make sure the password is correct
-            user.verifyPassword(password, function(err, isMatch) {
-                if (err) {
-                    return callback(err, false, { message: err });
-                }
-
-                // Password did not match
-                if (!isMatch) {
+        User
+            .find({ where: { email: email } })
+            .then(function (user) {
+                // No user found with that email
+                if (!user) {
                     return callback(null, false, { message: 'Invalid credentials' });
                 }
 
-                // Success
-                return callback(null, user);
+                // Make sure the password is correct
+                user.verifyPassword(password, function(err, isMatch) {
+                    if (err) {
+                        return callback(err, false, { message: err });
+                    }
+
+                    // Password did not match
+                    if (!isMatch) {
+                        return callback(null, false, { message: 'Invalid credentials' });
+                    }
+
+                    // Success
+                    return callback(null, user);
+                });
             });
-        });
     }
 ));
 
@@ -40,9 +38,11 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-    User.findById(id, function(err, user) {
-        done(err, user);
-    });
+    User
+        .find(id)
+        .then(function(err, user) {
+            done(err, user);
+        });
 });
 
 /**
