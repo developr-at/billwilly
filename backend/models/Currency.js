@@ -1,11 +1,26 @@
-var mongoose = require('mongoose');
+var sequelize = require('../db/sequelize'),
+    Sequelize = require('Sequelize');
 
-var CurrencySchema = new mongoose.Schema({
-    name: {
-    	type: String,
-    	unique: true,
-    	required: true
-    }
-});
+/**
+ * Currency Model
+ * @module models/Currency
+ */
+module.exports = (function() {
+    var Currency = sequelize.define('Currency', {
+        name: {
+            type: Sequelize.STRING,
+            unique: true,
+            validate: {
+                notEmpty: true
+            }
+        }
+    }, {
+        timestamps: true,
+        paranoid: true,
+        underscored: true,
+        freezeTableName: true,
+        tableName: 'bw_currency'
+    });
 
-module.exports = mongoose.model('Currency', CurrencySchema);
+    return Currency;
+})();

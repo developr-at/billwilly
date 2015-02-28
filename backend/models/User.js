@@ -1,5 +1,4 @@
-var mongoose = require('mongoose'),
-    bcrypt = require('bcrypt-nodejs'),
+var bcrypt = require('bcrypt-nodejs'),
     Sequelize = require('Sequelize'),
     sequelize = require('../db/sequelize');
 
@@ -32,7 +31,9 @@ module.exports = (function() {
             }
         },
         admin: {
-            type: Sequelize.BOOLEAN
+            type: Sequelize.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
         },
         lastLogin: {
             type: Sequelize.DATE
