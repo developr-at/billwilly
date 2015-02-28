@@ -18,7 +18,6 @@ var dbInit = require('./init/db');
 
 var API_VERSION = 'v1';
 
-
 mongoose.connect('mongodb://localhost/billwilly');
 
 // initiliazes the database
