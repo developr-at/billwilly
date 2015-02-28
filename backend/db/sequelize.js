@@ -5,6 +5,8 @@ var Sequelize = require('Sequelize');
  * @module db/sequelize
  */
 module.exports = (function() {
+    'use strict';
+
     var dbConfig = {
         hostname: 'localhost',
         database: 'billwilly',

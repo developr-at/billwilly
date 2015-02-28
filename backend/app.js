@@ -14,7 +14,7 @@ var auth = require('./routes/authentication');
 
 var mongoose = require('mongoose');
 var sequelize = require('./db/sequelize');
-var dbInit = require('./init/db');
+var dbInit = require('./db/init');
 
 module.exports = (function () {
     'use strict';
@@ -35,14 +35,7 @@ module.exports = (function () {
     ///////////////////////////////////////////////////////////////////////////
 
     function initializeDatabase() {
-        mongoose.connect('mongodb://localhost/billwilly');
-
-        var db = mongoose.connection;
-        db.on('error', console.error.bind(console, 'connection error:'));
-        db.once('open', function callback () {
-          debug('Successfully connected to database ...');
-          dbInit.init();
-        });
+        dbInit.init();
     }
 
     function enableCrossDomainRequests() {

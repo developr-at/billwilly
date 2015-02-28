@@ -1,9 +1,15 @@
-var mongoose = require('mongoose');
-var bcrypt = require('bcrypt-nodejs');
-var Sequelize = require('Sequelize');
-var sequelize = require('../db/sequelize');
+var mongoose = require('mongoose'),
+    bcrypt = require('bcrypt-nodejs'),
+    Sequelize = require('Sequelize'),
+    sequelize = require('../db/sequelize');
 
+/**
+ * User Model
+ * @module models/User
+ */
 module.exports = (function() {
+    'use strict';
+
     var User = sequelize.define('User', {
         firstname: {
             type: Sequelize.STRING
@@ -25,9 +31,6 @@ module.exports = (function() {
                 notEmpty: true
             }
         },
-        salt: {
-            type: Sequelize.STRING
-        },
         admin: {
             type: Sequelize.BOOLEAN
         },
@@ -41,7 +44,7 @@ module.exports = (function() {
         freezeTableName: true,
         tableName: 'bw_user',
         hooks: {
-            beforeCreate: function(user, next) {
+            beforeCreate: function(user, options, next) {
 
                 if (!user.changed('password')) {
                     return next();
@@ -77,5 +80,4 @@ module.exports = (function() {
     User.belongsToMany(User, { as: 'friends', through: 'bw_friend' });
     sequelize.sync();
     return User;
-
 })();
