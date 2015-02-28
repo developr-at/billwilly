@@ -1,5 +1,16 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
+var sequelize = require('../db/sequelize');
+
+sequelize.define('User', {
+
+}, {
+    timestamps: true,
+    paranoid: true,
+    underscored: true,
+    freezeTableName: true,
+    tableName: 'bw_user'
+});
 
 var UserSchema = new mongoose.Schema({
     firstname: String,
@@ -60,5 +71,7 @@ UserSchema.methods.verifyPassword = function(password, callback) {
         callback(null, isMatch);
     });
 };
+
+sequelize.sync();
 
 module.exports = mongoose.model('User', UserSchema);
