@@ -242,18 +242,21 @@ module.exports = (function() {
             .then(function (user) {
                 if (user) {
                     user.getFriends().then(function(friends) {
-                        console.log(friends);
                         if (friends) {
                             return res.json({
                                 message: null,
                                 friends: res.arrayFilter([ 'id', 'firstname', 'lastname', 'email' ], friends)
                             });
                         } else {
-                            return next(new Error('Unable to find user with id ' + data.id));
+                            res.status(404).json({
+                                message: 'Unable to find user with id ' + data.id
+                            });
                         }
                     });
                 } else {
-                    return next(new Error('Unable to find user with id ' + data.id));
+                    res.status(404).json({
+                        message: 'Unable to find user with id ' + data.id
+                    });
                 }
             });
     }
@@ -267,25 +270,21 @@ module.exports = (function() {
      */
     function addFriend(req, res, next) {
         var data = req.body;
-        var currentUser = req.cookies.user;
+        // var currentUser = req.cookies.user;
 
-        if (currentUser.id !== data.id && !currentUser.admin) {
-            return next(new Error('Id parameter has to be id of your user or id of an admin user'), null);
-        }
+        // console.log(req.cookies);
+        // console.log(currentUser);
+
+        // if (currentUser.id !== data.id && !currentUser.admin) {
+        //     return next(new Error('Id parameter has to be id of your user or id of an admin user'), null);
+        // }
 
         async.parallel([
             function(callback) {
                 // TODO: move User.findOne with friends to a separate module to reduce code
-                User.findOne({ id: data.id })
-                    .populate({
-                        path: 'friends',
-                        match: { deleted: false }
-                    })
-                    .exec(function (err, user) {
-                        if (err) {
-                            return callback(err, null);
-                        }
-
+                User
+                    .find(data.id)
+                    .then(function (user) {
                         if (user) {
                             return callback(null, user);
                         } else {
@@ -295,22 +294,13 @@ module.exports = (function() {
             },
             function(callback) {
                 // TODO: move User.findOne with friends to a separate module to reduce code
-                // for now use friendmail
-                // User.findOne({ id: data.friendId })
-                User.findOne({ email: data.friendEmail })
-                    .populate({
-                        path: 'friends',
-                        match: { deleted: false }
-                    })
-                    .exec(function (err, user) {
-                        if (err) {
-                            return callback(err, null);
-                        }
-
+                User
+                    .find(data.friendId)
+                    .then(function (user) {
                         if (user) {
                             return callback(null, user);
                         } else {
-                            return callback(new Error('Unable to find user with id ' + data.id), null);
+                            return callback(new Error('Unable to find user with id ' + data.friendId), null);
                         }
                     });
             }
@@ -322,12 +312,18 @@ module.exports = (function() {
 
             console.log(users);
 
-            users[0].friends.push(users[1]);
-            users[1].friends.push(users[0]);
-            users[0].save();
-            users[1].save();
+            var firstUser = users[0],
+                secondUser = users[1];
 
-            console.log(users);
+            firstUser.addFriend(secondUser);
+            secondUser.addFriend(firstUser);
+
+            // users[0].friends.push(users[1]);
+            // users[1].friends.push(users[0]);
+            // users[0].save();
+            // users[1].save();
+
+            // console.log(users);
 
             return res.json({
                 message: "Success"

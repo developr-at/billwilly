@@ -23,7 +23,7 @@
         vm.friends = [];
 
         // Load the profile data for the current user
-        User.getFriends({ id: Auth.getCurrentUser().id }, function (err, data) {
+        User.getFriends(Auth.getCurrentUser().id, function (err, data) {
             if (data) {
                 Array.prototype.push.apply(vm.friends, data.friends);
             }
@@ -35,12 +35,15 @@
          * @name addPersonAsFriend
          * @function
          * @memberOf billwilly.Friends.FriendsCtrl
+         * @param {int} userId - The id of the person to add.
          */
         function addPersonAsFriend(userId) {
             console.log("addPersonAsFriend" + userId);
-            // User.addFriend(..., function(err, data) {
-
-            // });
+            User.addFriend(Auth.getCurrentUser().id, userId, function(err, data) {
+                if (data) {
+                    console.log(data);
+                }
+            });
         }
 
         /**

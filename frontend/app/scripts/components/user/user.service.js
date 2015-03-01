@@ -96,13 +96,11 @@
          * @memberOf billwilly.User.User
          * @description Adds a friend to the user.
          * @param {int} userId - The id of the first user
-         * @param {string} friendEmail - The mail of the friend to add
+         * @param {int} friendId - The id of the friend to add
          * @param {function} callback - Callback to call on success/failure
          */
-        function addFriend(userId, friendEmail, callback) {
-            console.log("addFriend: " + friendEmail);
-
-            var request = $http.post(API_BASE_PATH + 'users/friends/add', { id: userId, friendEmail: friendEmail });
+        function addFriend(userId, friendId, callback) {
+            var request = $http.post(API_BASE_PATH + 'users/friends/add', { id: userId, friendId: friendId });
             request.success(function(data, status, headers, config) {
                 callback(null, data);
             });
