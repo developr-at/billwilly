@@ -36,21 +36,6 @@ module.exports = function(grunt) {
             }
         },
 
-        shell: {
-            mongodb: {
-                command: 'mongod --dbpath ./data/db/billwilly',
-                options: {
-                    async: true,
-                    stdout: false,
-                    stderr: true,
-                    failOnError: true,
-                    execOptions: {
-                        cwd: '.'
-                    }
-                }
-            }
-        },
-
         nodemon: {
             dev: {
                 script: './bin/www',
@@ -59,24 +44,14 @@ module.exports = function(grunt) {
                     ignore: ['node_modules/**']
                 }
             }
-        },
-
-        concurrent: {
-            options: {
-                logConcurrentOutput: true
-            },
-
-            tasks: ['shell', 'nodemon']
         }
     });
 
     grunt.loadNpmTasks('grunt-nodemon');
-    grunt.loadNpmTasks('grunt-concurrent');
     grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-shell-spawn');
     grunt.loadNpmTasks('grunt-jsdoc');
 
-    grunt.registerTask('dev', [ 'concurrent' ]);
+    grunt.registerTask('dev', [ 'nodemon' ]);
 
     grunt.registerTask('doc', [ 'clean:doc', 'jsdoc' ]);
 };
