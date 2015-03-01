@@ -11,6 +11,7 @@ module.exports = (function() {
     var module = {
         // general
         check: check,
+        search: search,
 
         // profile
         profile: profile,
@@ -52,6 +53,39 @@ module.exports = (function() {
                 } else {
                     res.status(404).json({
                         success: true
+                    });
+                }
+            });
+    }
+
+    /**
+     * 
+     * @alias module:controller/user.search
+     * @param {object} req
+     * @param {object} res
+     * @param {object} next
+     */
+    function search(req, res, next) {
+        var data = req.body,
+            searchTerm = '%' + data.searchTerm + '%';
+
+        User
+            .findAndCountAll({ where: {
+                $or: [
+                    { email: { $like: searchTerm } },
+                    { firstname: { $like: searchTerm } },
+                    { lastname: { $like: searchTerm } }
+                ]
+            }})
+            .then(function(result) {
+                if (result) {
+                    res.json({
+                        success: true,
+                        user: res.arrayFilter([ 'id', 'firstname', 'lastname', 'email' ], result.rows)
+                    });
+                } else {
+                    res.status(404).json({
+                        success: false
                     });
                 }
             });
@@ -203,22 +237,20 @@ module.exports = (function() {
         var data = req.body;
 
         // TODO: move User.findOne with friends to a separate module to reduce code
-        User.findOne({ id: data.id })
-            .populate({
-                path: 'friends',
-                match: { deleted: false }
-            })
-            .exec(function (err, user) {
-                if (err) {
-                    return next(err);
-                }
-
-                console.log(user);
-
+        User
+            .find({ where: { id: data.id }/*, include: [{model: User, as: 'friends'}]*/ })
+            .then(function (user) {
                 if (user) {
-                    return res.json({
-                        message: null,
-                        friends: user.friends
+                    user.getFriends().then(function(friends) {
+                        console.log(friends);
+                        if (friends) {
+                            return res.json({
+                                message: null,
+                                friends: res.arrayFilter([ 'id', 'firstname', 'lastname', 'email' ], friends)
+                            });
+                        } else {
+                            return next(new Error('Unable to find user with id ' + data.id));
+                        }
                     });
                 } else {
                     return next(new Error('Unable to find user with id ' + data.id));

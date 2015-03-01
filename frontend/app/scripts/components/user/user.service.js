@@ -42,14 +42,14 @@
          * @memberOf billwilly.User.User
          */
         function search(searchTerm, callback) {
-            // var request = $http.get(API_BASE_PATH + 'user/search', { search: searchTerm });
-            // request.success(function(data, status, headers, config) {
-
-            // });
-            // request.error(function(data, status, headers, config) {
-
-            // });
-            callback();
+            // TODO: Refactor all rest calls
+            var request = $http.post(API_BASE_PATH + 'users/search', { searchTerm: searchTerm });
+            request.success(function(data, status, headers, config) {
+                callback(null, data);
+            });
+            request.error(function(data, status, headers, config) {
+                callback(null, data);
+            });
         }
 
         /**

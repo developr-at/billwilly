@@ -14,6 +14,9 @@ router.route('/register')
 router.route('/check')
     .post(userController.check);
 
+router.route('/search')
+    .post(userController.search);
+
 router.route('/friends')
     .post(userController.getFriends);
 

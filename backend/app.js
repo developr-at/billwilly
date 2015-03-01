@@ -63,13 +63,28 @@ module.exports = (function () {
                     idx;
 
                 for ( idx = 0; idx < columns.length; ++idx ) {
-                    if ( object.hasOwnProperty(columns[idx]) ) {
+                    // if ( object.hasOwnProperty(columns[idx]) ) {
+                    if ( typeof object[columns[idx]] !== 'undefined' ) {
                         filtered[columns[idx]] = object[columns[idx]];
                     }
                 }
 
                 return filtered;
             };
+
+            res.arrayFilter = function (columns, arr) {
+                var filteredArray = [],
+                    filtered = {},
+                    idx;
+
+                for ( idx = 0; idx < arr.length; ++idx ) {
+                    filtered = res.filter(columns, arr[idx]);
+                    filteredArray.push(filtered);
+                }
+
+                return filteredArray;
+            };
+
             next();
         });
     }
