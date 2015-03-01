@@ -38,10 +38,9 @@
          * @param {int} userId - The id of the person to add.
          */
         function addPersonAsFriend(userId) {
-            console.log("addPersonAsFriend" + userId);
             User.addFriend(Auth.getCurrentUser().id, userId, function(err, data) {
                 if (data) {
-                    console.log(data);
+                    vm.friends.push(data.friend);
                 }
             });
         }
@@ -50,8 +49,15 @@
          * @name isAlreadyFriend
          * @function
          * @memberOf billwilly.Friends.FriendsCtrl
+         * @param {int} userId - The id to check.
          */
         function isAlreadyFriend(userId) {
+            for ( var i = 0; i < vm.friends.length; ++i ) {
+                if (vm.friends[i].id === userId) {
+                    return true;
+                }
+            }
+
             return false;
         }
 

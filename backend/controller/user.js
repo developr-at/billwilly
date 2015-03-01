@@ -310,23 +310,15 @@ module.exports = (function() {
                 return next(err);
             }
 
-            console.log(users);
-
             var firstUser = users[0],
                 secondUser = users[1];
 
             firstUser.addFriend(secondUser);
             secondUser.addFriend(firstUser);
 
-            // users[0].friends.push(users[1]);
-            // users[1].friends.push(users[0]);
-            // users[0].save();
-            // users[1].save();
-
-            // console.log(users);
-
             return res.json({
-                message: "Success"
+                message: "Success",
+                friend:  res.filter([ 'id', 'firstname', 'lastname', 'email' ], secondUser)
             });
         });
     }
