@@ -1,4 +1,5 @@
-var User = require('../models/User');
+var User = require('../models/User'),
+    Currency = require('../models/Currency');
 
 /**
  * Database Initialization
@@ -8,8 +9,7 @@ module.exports = (function () {
     'use strict';
 
     var module = {
-        init: init,
-        initAdminUser: initAdminUser
+        init: init
     };
 
     return module;
@@ -22,7 +22,8 @@ module.exports = (function () {
      * @alias module:init/db.init
      */
     function init () {
-        module.initAdminUser();
+        initAdminUser();
+        initCurrencies();
     }
 
     /**
@@ -40,6 +41,18 @@ module.exports = (function () {
             defaults: {
                 email: ADMIN_EMAIL,
                 password: ADMIN_PASSWORD
+            }
+        });
+    }
+
+    /**
+     * initCurrencies
+     * @alias module:init/db.initCurrencies
+     */
+    function initCurrencies () {
+        Currency.findOrCreate({
+            where: {
+                name: 'Euro'
             }
         });
     }
