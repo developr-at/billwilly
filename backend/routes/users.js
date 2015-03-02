@@ -23,4 +23,7 @@ router.route('/friends')
 router.route('/friends/add')
     .post(userController.addFriend);
 
+router.route('/friends/remove')
+    .post(userController.removeFriend);
+
 module.exports = router;

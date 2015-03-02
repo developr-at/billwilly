@@ -37,12 +37,14 @@
                     <tr>
                         <th st-sort="name">Friend</th>
                         <th st-sort="amount">Amount</th>
+                        <th>&nbsp;</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="pm in friends.friends">
                         <td><a ui-sref="userProfile({ userId: pm.id })">{{ pm.firstname }} {{ pm.lastname }}</a> ({{ pm.email}})</td>
                         <td>-</td>
+                        <td><a href="#" ng-click="friends.removeFriend(pm.id)">Remove</a></td>
                     </tr>
                 </tbody>
             </table>

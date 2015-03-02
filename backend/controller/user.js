@@ -25,8 +25,7 @@ module.exports = (function() {
         // friends
         getFriends: getFriends,
         addFriend: addFriend,
-        removeFriend: removeFriend,
-        findFriend: findFriend
+        removeFriend: removeFriend
     };
 
     return module;
@@ -331,11 +330,25 @@ module.exports = (function() {
      * @param {object} next
      */
     function removeFriend(req, res, next) {
-        // do sth.
-    }
+        var data = req.body;
 
-    function findFriend(req, res, next) {
-
+        // TODO: Remove user from friend (the other way)
+        // TODO: move User.findOne with friends to a separate module to reduce code
+        User
+            .find({ where: { id: data.id }/*, include: [{model: User, as: 'friends'}]*/ })
+            .then(function (user) {
+                if (user) {
+                    user.removeFriend(data.friendId).then(function() {
+                        return res.json({
+                            message: 'Removed friend with id ' + data.friendId
+                        });
+                    });
+                } else {
+                    res.status(404).json({
+                        message: 'Unable to find user with id ' + data.friendId
+                    });
+                }
+            });
     }
 
 })();

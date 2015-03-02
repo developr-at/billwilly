@@ -19,6 +19,7 @@
         vm.searchResult = [];
         vm.searchPerson = searchPerson;
         vm.addPersonAsFriend = addPersonAsFriend;
+        vm.removeFriend = removeFriend;
         vm.isAlreadyFriend = isAlreadyFriend;
         vm.friends = [];
 
@@ -41,6 +42,21 @@
             User.addFriend(Auth.getCurrentUser().id, userId, function(err, data) {
                 if (data) {
                     vm.friends.push(data.friend);
+                }
+            });
+        }
+
+        /**
+         * @name removeFriend
+         * @function
+         * @memberOf billwilly.Friends.FriendsCtrl
+         * @param {int} userId - The id of the friend to remove.
+         */
+        function removeFriend(userId) {
+            User.removeFriend(Auth.getCurrentUser().id, userId, function(err, data) {
+                if (data) {
+                    // TODO: Remove friend from vm.friends
+                    console.log(data);
                 }
             });
         }
@@ -71,44 +87,6 @@
                 if (data) {
                     vm.searchResult = data.user;
                 }
-                // vm.searchResult = [
-                //     {
-                //         'id': '5496ba4bff95f6841dc1f544',
-                //         'firstname': 'Rrrlrrr',
-                //         'lastname': 'RRRRRRR',
-                //         'mail': 'mail@mail.at'
-                //     },
-                //     {
-                //         'id': '5496ba4bff95f6841dc1f544',
-                //         'firstname': 'Rrrlrrr',
-                //         'lastname': 'RRRRRRR',
-                //         'mail': 'mail@mail.at'
-                //     },
-                //     {
-                //         'id': '5496ba4bff95f6841dc1f544',
-                //         'firstname': 'Rrrlrrr',
-                //         'lastname': 'RRRRRRR',
-                //         'mail': 'mail@mail.at'
-                //     },
-                //     {
-                //         'id': '5496ba4bff95f6841dc1f544',
-                //         'firstname': 'Rrrlrrr',
-                //         'lastname': 'RRRRRRR',
-                //         'mail': 'mail@mail.at'
-                //     },
-                //     {
-                //         'id': '5496ba4bff95f6841dc1f544',
-                //         'firstname': 'Rrrlrrr',
-                //         'lastname': 'RRRRRRR',
-                //         'mail': 'mail@mail.at'
-                //     },
-                //     {
-                //         'id': '5496ba4bff95f6841dc1f544',
-                //         'firstname': 'Rrrlrrr',
-                //         'lastname': 'RRRRRRR',
-                //         'mail': 'mail@mail.at'
-                //     }
-                // ];
             });
         }
     }
