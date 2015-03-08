@@ -28,7 +28,7 @@
         // Login page
         $stateProvider.state('login', {
             url: '/login',
-            templateUrl: 'views/login.html',
+            templateUrl: 'views/login.tmpl.html',
             controller: 'LoginCtrl as login',
             restricted: false
         });
@@ -36,7 +36,7 @@
         // Register page
         $stateProvider.state('register', {
             url: '/register',
-            templateUrl: 'views/register.html',
+            templateUrl: 'views/register.tmpl.html',
             controller: 'LoginCtrl as login',
             restricted: false
         });
@@ -44,7 +44,7 @@
         // Register Success page
         $stateProvider.state('registerSuccess', {
             url: '/register/success',
-            templateUrl: 'views/registerSuccess.html',
+            templateUrl: 'views/registerSuccess.tmpl.html',
             controller: 'LoginCtrl as login',
             restricted: true
         });

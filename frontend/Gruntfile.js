@@ -127,6 +127,20 @@ module.exports = function(grunt) {
             }
         },
 
+        htmlangular: {
+            options: {
+                tmplext: 'tmpl.html',
+                customtags: [],
+                customattrs: [ 'st-table', 'st-sort', 'chart', 'google-chart', 'compare-to', 'unique-email' ],
+                relaxerror: [
+                    'Attribute src not allowed on element div at this point.'
+                ]
+            },
+            files: {
+                src: [ '<%= billwilly.app %>/index.html', '<%= billwilly.app %>/views/**/*.html' ]
+            }
+        },
+
         less: {
             dev: {
                 files: {
@@ -184,19 +198,20 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.loadNpmTasks('grunt-contrib-connect');
-    grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-contrib-less');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-bower-task');
     grunt.loadNpmTasks('grunt-concurrent');
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-less');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-html-angular-validate');
     grunt.loadNpmTasks('grunt-jsdoc');
     grunt.loadNpmTasks('grunt-karma');
 
-    grunt.registerTask('dev', [ 'bower', 'clean:dist', 'copy', 'concurrent' ]);
+    grunt.registerTask('dev', [ 'bower', 'htmlangular', 'clean:dist', 'copy', 'concurrent' ]);
     grunt.registerTask('test', [ 'karma' ]);
 
     grunt.registerTask('doc', [ 'clean:doc', 'jsdoc' ]);
