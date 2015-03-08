@@ -1,5 +1,8 @@
-var User = require('../models/User'),
-    Currency = require('../models/Currency');
+var sequelize = require('../db/sequelize'),
+    User = require('../models/User'),
+    Currency = require('../models/Currency'),
+    PaymentItem = require('../models/PaymentItem'),
+    Payment = require('../models/Payment');
 
 /**
  * Database Initialization
@@ -22,8 +25,10 @@ module.exports = (function () {
      * @alias module:init/db.init
      */
     function init () {
-        initAdminUser();
-        initCurrencies();
+        sequelize.sync().then(function () {
+            initAdminUser();
+            initCurrencies();
+        });
     }
 
     /**

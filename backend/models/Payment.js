@@ -29,9 +29,6 @@ module.exports = (function() {
         tableName: 'bw_payment'
     });
 
-    Payment.belongsTo(User);
-    Payment.belongsTo(Currency);
-
     return Payment;
 })();
 

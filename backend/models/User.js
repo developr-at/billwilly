@@ -79,6 +79,5 @@ module.exports = (function() {
     });
 
     User.belongsToMany(User, { as: 'friends', through: 'bw_friend' });
-    sequelize.sync();
     return User;
 })();
