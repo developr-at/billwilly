@@ -1,13 +1,31 @@
 <div class="well">
     <div class="row">
         <div class="col-sm-12">
-            <h1>{{ profile.profileData.firstname }} {{ profile.profileData.lastname }}</h1>
-            <span ng-hide="profile.isFriend()">
+            <h1>{{ profile.profileData.firstname }} {{ profile.profileData.lastname }} <small>{{ profile.profileData.email }}</small></h1>
+            <span ng-hide="profile.isAlreadyFriend">
                 <p>This user is currenty not your friend. Do you want to add "{{ profile.profileData.firstname }} {{ profile.profileData.lastname }}" to your friends?</p>
-                <button class="btn btn-primary" ng-click="profile.addAsFriend()">Yes, add to friends</button>
-            <span>
-            <span ng-show="profile.isFriend()">
-
+                <button class="btn btn-primary" ng-click="profile.addPersonAsFriend()">Yes, add to friends</button>
+            </span>
+            <span ng-show="profile.isAlreadyFriend">
+                <h2>Payment History</h2>
+                <table st-table="profile.friendPayments" class="table table-striped table-friend-payments">
+                    <thead>
+                        <tr>
+                            <th st-sort="name">Title</th>
+                            <th st-sort="amount">Amount</th>
+                            <th st-sort="date">Date</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="payment in profile.friendPayments">
+                            <td>{{ payment.title }}</td>
+                            <td>{{ payment.amount }}</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                    </tbody>
+                </table>
             </span>
         </div>
     </div>

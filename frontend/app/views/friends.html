@@ -15,7 +15,7 @@
                     <div class="col-sm-6" ng-repeat="rs in friends.searchResult">
                         <div class="well search-well clearfix">
                             <div class="pull-left">
-                                <a ui-sref="userProfile({ userId: rs.id })" target="_blank">
+                                <a ui-sref="userProfile({ userId: rs.id })">
                                     <div class="name">{{ rs.firstname }} {{ rs.lastname }}</div>
                                     <div class="email">{{ rs.email }}</div>
                                 </a>

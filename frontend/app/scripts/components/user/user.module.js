@@ -12,7 +12,8 @@
      */
     angular
     	.module('app.user', [])
-        .config(config);
+        .config(config)
+        .run(redirectProfile);
 
     /**
      * @name config
@@ -38,4 +39,22 @@
     }
 
     config.$inject = [ '$stateProvider' ];
+
+    /**
+     * If the user clicks on his own user link, he gets redirected to his
+     * profile page.
+     * @param {object} $rootScope - AngularJS root scope
+     * @param {object} $state - AngularJS state
+     * @param {object} Auth - Auth service
+     */
+    function redirectProfile($rootScope, $state, Auth) {
+        $rootScope.$on('$stateChangeStart', function (evt, toState, toParams) {
+            if ( toState.name === 'userProfile' && toParams.userId == Auth.getCurrentUser().id ) {
+                evt.preventDefault();
+                $state.go('profile');
+            }
+        });
+    }
+
+    redirectProfile.$inject = [ '$rootScope', '$state', 'Auth' ];
 })();
