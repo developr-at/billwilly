@@ -37,6 +37,7 @@
             { title: "Test Payment 7", amount: 1234 },
         ];
 
+        vm.addPersonAsFriend = addPersonAsFriend;
         vm.isAlreadyFriend = false;
         vm.friends = [];
 
@@ -77,6 +78,7 @@
             User.addFriend(Auth.getCurrentUser().id, $stateParams.userId, function(err, data) {
                 if (data) {
                     console.log(data);
+                    vm.isAlreadyFriend = true;
                 }
             });
         }

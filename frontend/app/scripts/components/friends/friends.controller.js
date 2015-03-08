@@ -57,6 +57,8 @@
                 if (data) {
                     // TODO: Remove friend from vm.friends
                     console.log(data);
+                    var friendIndex = findFriendIndexById(userId);
+                    vm.friends.splice(friendIndex, 1);
                 }
             });
         }
@@ -68,13 +70,7 @@
          * @param {int} userId - The id to check.
          */
         function isAlreadyFriend(userId) {
-            for ( var i = 0; i < vm.friends.length; ++i ) {
-                if (vm.friends[i].id === userId) {
-                    return true;
-                }
-            }
-
-            return false;
+            return findFriendIndexById(userId) !== -1;
         }
 
         /**
@@ -88,6 +84,15 @@
                     vm.searchResult = data.user;
                 }
             });
+        }
+
+        function findFriendIndexById(userId) {
+            for ( var i = 0; i < vm.friends.length; ++i ) {
+                if (vm.friends[i].id === userId)
+                    return i;
+            }
+
+            return -1;
         }
     }
 

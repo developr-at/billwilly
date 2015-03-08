@@ -120,8 +120,6 @@
          * @param {function} callback - Callback to call on success/failure
          */
         function removeFriend(userId, friendId, callback) {
-            console.log("removeFriend: " + friendId);
-
             var request = $http.post(API_BASE_PATH + 'users/friends/remove', { id: userId, friendId: friendId });
             request.success(function(data, status, headers, config) {
                 callback(null, data);
