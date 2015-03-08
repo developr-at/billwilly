@@ -12,14 +12,13 @@
         vm.positiveChart = prepareChart(Payments.getPositivePayments());
         vm.negativeChart = prepareChart(Payments.getNegativePayments());
 
+        vm.addPayment = addPayment;
         vm.addPaymentSubmitted = false;
         vm.newPayment = {
+            title: '',
+            notes: '',
             user: '',
             amount: 0
-        };
-
-        vm.addPayment = function() {
-
         };
 
 
@@ -59,6 +58,19 @@
             }
 
             return chart;
+        }
+
+        function addPayment(isValid) {
+            vm.addPaymentSubmitted = true;
+
+            if (isValid) {
+                Payments.addPayment(vm.newPayment, function (err, data) {
+                    console.log(err);
+                    if (data) {
+                        console.log(data);
+                    }
+                });
+            }
         }
     }
 

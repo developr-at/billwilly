@@ -10,6 +10,7 @@ var debug = require('debug')('billwilly');
 // Load Route Definitions
 var users = require('./routes/users');
 var auth = require('./routes/authentication');
+var payments = require('./routes/payments');
 
 var mongoose = require('mongoose');
 var sequelize = require('./db/sequelize');
@@ -97,6 +98,7 @@ module.exports = (function () {
     function initializeApiRoutes() {
         app.use('/api/' + API_VERSION + '/auth', auth);
         app.use('/api/' + API_VERSION  + '/users', users);
+        app.use('/api/' + API_VERSION  + '/payments', payments);
     }
 
     function initializeRouteHandling() {

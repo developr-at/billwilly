@@ -5,9 +5,8 @@
         .module('app.payments')
         .factory('Payments', Payments);
 
-    // Payments.$inject = ['...'];
 
-    function Payments() {
+    function Payments($http, API_BASE_PATH) {
         var service = {
             payments: [],
 
@@ -39,8 +38,14 @@
 
         ////////////////////////
 
-        function addPayment(paymentData) {
-            // TODO
+        function addPayment(paymentData, callback) {
+            var request = $http.post(API_BASE_PATH + 'payments/add', { paymentData: paymentData });
+            request.success(function(data, status, headers, config) {
+                callback(null, data);
+            });
+            request.error(function(data, status, headers, config) {
+                callback(null, data);
+            });
         }
 
         function getPayments() {
@@ -79,4 +84,6 @@
             ];
         }
     }
+
+    Payments.$inject = [ '$http', 'API_BASE_PATH' ];
 })();
