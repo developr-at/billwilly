@@ -1,6 +1,6 @@
 var sequelize = require('../db/sequelize'),
     User = require('../models/User'),
-    Payment = require('../models/Payment'),
+    // Payment = require('../models/Payment'),
     Sequelize = require('Sequelize');
 
 /**
@@ -9,6 +9,9 @@ var sequelize = require('../db/sequelize'),
  */
 module.exports = (function() {
     var PaymentItem = sequelize.define('PaymentItem', {
+        amount: {
+            type: Sequelize.DECIMAL
+        },
     }, {
         timestamps: true,
         paranoid: true,
@@ -17,7 +20,7 @@ module.exports = (function() {
         tableName: 'bw_paymentitem'
     });
 
-    PaymentItem.belongsTo(Payment);
+    // PaymentItem.belongsTo(Payment);
     PaymentItem.belongsTo(User);
     return PaymentItem;
 })();

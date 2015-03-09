@@ -1,3 +1,6 @@
+var Payment = require('../models/Payment'),
+    PaymentItem = require('../models/PaymentItem');
+
 /**
  * Payment Controller
  * @module controller/payment
@@ -21,11 +24,29 @@ module.exports = (function() {
      * @param {object} next
      */
     function addPayment(req, res, next) {
-        var data = req.body;
+        var data = req.body,
+            paymentData = data.paymentData;
 
-        res.json({
-            success: true
-        });
+        Payment
+            .create({
+                title: paymentData.title,
+                notes: paymentData.notes
+            })
+            .then(function (payment, created) {
+                for ( var item in paymentData.items ) {
+                    PaymentItem
+                        .create({
+                            amount: item.amount
+                        })
+                        .then(function (paymentItem) {
+                            payment.addPaymentItem(paymentItem);
+                        });
+                }
+
+                res.json({
+                    success: true
+                });
+            });
     }
 
 })();

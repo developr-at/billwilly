@@ -1,6 +1,7 @@
 var sequelize = require('../db/sequelize'),
     Sequelize = require('Sequelize'),
-    Currency = require('./Currency');
+    Currency = require('./Currency'),
+    PaymentItem = require('./PaymentItem');
 
 /**
  * Payment Model
@@ -29,6 +30,7 @@ module.exports = (function() {
         tableName: 'bw_payment'
     });
 
+    Payment.hasMany(PaymentItem);
     return Payment;
 })();
 
