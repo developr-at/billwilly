@@ -2,7 +2,8 @@ var sequelize = require('../db/sequelize'),
     User = require('../models/User'),
     Currency = require('../models/Currency'),
     Payment = require('../models/Payment'),
-    PaymentItem = require('../models/PaymentItem');
+    PaymentItem = require('../models/PaymentItem'),
+    Debt = require('../models/Debt');
 
 /**
  * Database Initialization
