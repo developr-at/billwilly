@@ -11,6 +11,7 @@ var debug = require('debug')('billwilly');
 var users = require('./routes/users');
 var auth = require('./routes/authentication');
 var payments = require('./routes/payments');
+var debts = require('./routes/debts');
 
 var mongoose = require('mongoose');
 var sequelize = require('./db/sequelize');
@@ -99,6 +100,7 @@ module.exports = (function () {
         app.use('/api/' + API_VERSION + '/auth', auth);
         app.use('/api/' + API_VERSION  + '/users', users);
         app.use('/api/' + API_VERSION  + '/payments', payments);
+        app.use('/api/' + API_VERSION  + '/debts', debts);
     }
 
     function initializeRouteHandling() {

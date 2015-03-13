@@ -1,5 +1,6 @@
 var Payment = require('../models/Payment'),
-    PaymentItem = require('../models/PaymentItem');
+    PaymentItem = require('../models/PaymentItem'),
+    Debt = require('../models/Debt');
 
 /**
  * Payment Controller
@@ -25,7 +26,14 @@ module.exports = (function() {
      */
     function addPayment(req, res, next) {
         var data = req.body,
-            paymentData = data.paymentData;
+            paymentData = data.paymentData,
+            debtData = calculateDebtsFromPayment(paymentData);
+
+        if (!paymentData.hasOwnProperty('items')) {
+            res.status(404).json({
+                success: false
+            });
+        }
 
         Payment
             .create({
@@ -47,6 +55,26 @@ module.exports = (function() {
                     success: true
                 });
             });
+    }
+
+    /**
+     * calculateDebtsFromPayment
+     * @alias module:controller/payment.calculateDebtsFromPayment
+     * @param {object} paymentData - Information about the payment
+     * @return {object|array} List of debts
+     */
+    function calculateDebtsFromPayment(paymentData) {
+        var debts = [];
+
+        if (!paymentData.hasOwnProperty('items')) {
+            return [];
+        }
+
+        for ( var item in paymentData.items ) {
+
+        }
+
+        return debts;
     }
 
 })();
