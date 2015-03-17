@@ -14,13 +14,16 @@
      * @class billwilly.Payments.PaymentCtrl
      * @description Controller for the payment pages.
      * @param {object} Payments - Payments service
+     * @param {object} Debts - Debts service
+     * @param {object} Auth - Auth service
      */
-    function PaymentCtrl(Payments) {
+    function PaymentCtrl(Payments, Debts, Auth) {
         var vm = this;
 
-        vm.payments = Payments.payments;
-        vm.positiveChart = prepareChart(Payments.getPositivePayments());
-        vm.negativeChart = prepareChart(Payments.getNegativePayments());
+        vm.positiveDebts = [];
+        vm.negativeDebts = [];
+        vm.positiveChart = {};
+        vm.negativeChart = {};
 
         vm.addAdditionalUser = addAdditionalUser;
         vm.removeUser = removeUser;
@@ -37,18 +40,28 @@
             ]
         };
 
+        Debts.getDebts(Auth.getCurrentUser().id, function (err, data) {
+            console.log(data);
+            if (data) {
+                vm.positiveDebts = data.debts.filter(function (entry) { return !entry.isDebt; });
+                vm.negativeDebts = data.debts.filter(function (entry) { return entry.isDebt; });
+
+                vm.positiveChart = prepareChart(vm.positiveDebts);
+                vm.negativeChart = prepareChart(vm.negativeDebts);
+            }
+        });
 
         ///////////////////////////////////////////////////////////////////////
 
         /**
          * Prepares a chart object for angular google chart with the given
-         * payments.
-         * @param {array} payments List of all payments that should be
+         * debts.
+         * @param {array} debts List of all debts that should be
          *      represented in the chart.
          * @return {object} Chart object that can be used for an angular
          *      google chart.
          */
-        function prepareChart(payments) {
+        function prepareChart(debts) {
             var chart = {
                     type: "PieChart",
                     data: {
@@ -62,11 +75,11 @@
                 row,
                 i;
 
-            for (i = 0; i < payments.length; i++) {
+            for (i = 0; i < debts.length; i++) {
                 row = {
                     c: [
-                        { v: payments[i].user.firstname },
-                        { v: payments[i].payment.amount }
+                        { v: debts[i].friend.firstname + ' ' + debts[i].friend.lastname },
+                        { v: debts[i].amount }
                     ]
                 };
 
@@ -122,5 +135,5 @@
         }
     }
 
-    PaymentCtrl.$inject = [ "Payments" ];
+    PaymentCtrl.$inject = [ "Payments", "Debts", "Auth" ];
 })();

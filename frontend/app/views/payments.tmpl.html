@@ -11,29 +11,45 @@
             </div>
             <div class="row">
                 <div class="col-sm-6">
-                    <h2>Owes you</h2>
+                    <h2>Owes You</h2>
                     <div google-chart chart="payment.positiveChart" style="{{cssStyle}}"></div>
                 </div>
                 <div class="col-sm-6">
-                    <h2>You owe</h2>
+                    <h2>You Owe</h2>
                     <div google-chart chart="payment.negativeChart" style="{{cssStyle}}"></div>
                 </div>
             </div>
             <hr class="soften" />
             <div>
-                <table st-table="payment.payments" class="table table-striped">
+                <h3>Owes You</h3>
+                <table st-table="payment.positiveDebts" class="table table-striped">
                     <thead>
                         <tr>
-                            <th>From</th>
-                            <th>To</th>
-                            <th>Amount</th>
+                            <th st-sort="name">Friend</th>
+                            <th st-sort="amount">Amount</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="pm in payment.payments">
-                            <td>{{ pm.fromUser.firstname }}</td>
-                            <td>{{ pm.toUser.firstname }}</td>
-                            <td>{{ pm.amount | currency:pm.currency.name:2 }}</td>
+                        <tr ng-repeat="pm in payment.positiveDebts">
+                            <td><a ui-sref="userProfile({ userId: pm.friend.id })">{{ pm.friend.firstname }} {{ pm.friend.lastname }}</a> ({{ pm.friend.email}})</td>
+                            <td>{{ pm.amount }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <h3>You Owe</h3>
+                <table st-table="payment.negativeDebts" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th st-sort="name">Friend</th>
+                            <th st-sort="amount">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="pm in payment.negativeDebts">
+                            <td><a ui-sref="userProfile({ userId: pm.friend.id })">{{ pm.friend.firstname }} {{ pm.friend.lastname }}</a> ({{ pm.friend.email}})</td>
+                            <td>{{ pm.amount }}</td>
                         </tr>
                     </tbody>
                 </table>

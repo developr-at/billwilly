@@ -73,7 +73,8 @@ module.exports = (function() {
 
                 mergedDebts.push({
                     friend: res.filter([ 'id', 'firstname', 'lastname', 'email' ], debt.SecondUser),
-                    amount: debt.amount
+                    amount: debt.amount,
+                    isDebt: false
                 });
             }
 
@@ -82,7 +83,8 @@ module.exports = (function() {
 
                 mergedDebts.push({
                     friend: res.filter([ 'id', 'firstname', 'lastname', 'email' ], debt.FirstUser),
-                    amount: debt.amount
+                    amount: debt.amount,
+                    isDebt: true
                 });
             }
 

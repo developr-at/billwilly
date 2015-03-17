@@ -10,6 +10,8 @@
         .module('app.payments', [
             'googlechart',
             'smart-table',
+
+            'app.debts'
         ])
         .config(config);
 
