@@ -1,4 +1,5 @@
 var Debt = require('../models/Debt'),
+    User = require('../models/User'),
     async = require('async');
 
 /**
@@ -27,23 +28,68 @@ module.exports = (function() {
         var data = req.body,
             userId = data.userId;
 
-        // Debt
-        //     .find({ where: { FirstUser: userId } })
-        //     .then(function(debt) {
-        //         if (debt) {
-        //             res.json({
-        //                 debt: res.filter([ 'id', 'FirstUser', 'SecondUser', 'amount' ], debt.dataValues)
-        //                 success: false
-        //             });
-        //         } else {
-        //             res.status(404).json({
-        //                 success: true
-        //             });
-        //         }
-        //     });
+        async.parallel([
+            function(callback) {
+                Debt
+                    .findAll({ where: { 'first_user_id': userId }/*, include: [ {model: User, as: User.tableName }]*/
+                    , include: [
+                        { model: User, as: 'SecondUser' }
+                    ]})
+                    .then(function (debts) {
+                        if (debts) {
+                            return callback(null, debts);
+                        } else {
+                            return callback(null, []);
+                        }
+                    });
+            },
+            function(callback) {
+                Debt
+                    .findAll({ where: { 'second_user_id': userId }/*, include: [ {model: User, as: User.tableName }]*/
+                     , include: [
+                        { model: User, as: 'FirstUser' }
+                    ]})
+                    .then(function (debts) {
+                        if (debts) {
+                            return callback(null, debts);
+                        } else {
+                            return callback(null, []);
+                        }
+                    });
+            }
+        ],
+        function(err, allDebts) {
+            if (err) {
+                return next(err);
+            }
 
-        res.json({
-            success: false
+            var firstDebtArray = allDebts[0],
+                secondDebtArray = allDebts[1],
+                mergedDebts = [],
+                debt;
+
+            for (var i = 0; i < firstDebtArray.length; ++i) {
+                debt = firstDebtArray[ i ];
+
+                mergedDebts.push({
+                    friend: res.filter([ 'id', 'firstname', 'lastname', 'email' ], debt.SecondUser),
+                    amount: debt.amount
+                });
+            }
+
+            for (var i = 0; i < secondDebtArray.length; ++i) {
+                debt = secondDebtArray[ i ];
+
+                mergedDebts.push({
+                    friend: res.filter([ 'id', 'firstname', 'lastname', 'email' ], debt.FirstUser),
+                    amount: debt.amount
+                });
+            }
+
+            return res.json({
+                message: "Success",
+                debts:  mergedDebts
+            });
         });
     }
 

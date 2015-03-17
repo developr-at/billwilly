@@ -1,4 +1,5 @@
-var User = require('../models/User'),
+var sequelize = require('../db/sequelize'),
+    User = require('../models/User'),
     async = require('async');
 
 /**
@@ -235,28 +236,18 @@ module.exports = (function() {
     function getFriends(req, res, next) {
         var data = req.body;
 
-        // TODO: move User.findOne with friends to a separate module to reduce code
-        User
-            .find({ where: { id: data.id }/*, include: [{model: User, as: 'friends'}]*/ })
-            .then(function (user) {
-                if (user) {
-                    user.getFriends().then(function(friends) {
-                        if (friends) {
-                            return res.json({
-                                message: null,
-                                friends: res.arrayFilter([ 'id', 'firstname', 'lastname', 'email' ], friends)
-                            });
-                        } else {
-                            res.status(404).json({
-                                message: 'Unable to find user with id ' + data.id
-                            });
-                        }
-                    });
-                } else {
-                    res.status(404).json({
-                        message: 'Unable to find user with id ' + data.id
-                    });
-                }
+        sequelize
+            .query('SELECT us.id, us.firstname, us.lastname, us.email, de.amount as negative, de2.amount as positive ' +
+                    'FROM bw_friend fr ' +
+                    'JOIN bw_user us on fr.friend_id = us.id ' +
+                    'LEFT JOIN bw_debt de on de.first_user_id = us.id ' +
+                    'LEFT JOIN bw_debt de2 on de2.second_user_id = us.id ' +
+                    'WHERE fr.user_id = :userId', { replacements: { userId: data.id }, type: sequelize.QueryTypes.SELECT })
+            .then(function(data) {
+                return res.json({
+                    message: null,
+                    friends: data
+                });
             });
     }
 

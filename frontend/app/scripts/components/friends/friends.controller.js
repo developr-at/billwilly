@@ -11,8 +11,9 @@
      * @param {object} Payments - Payments service
      * @param {object} User - User service
      * @param {object} Auth - Auth service
+     * @param {object} Debts - Debts service
      */
-    function FriendsCtrl(Payments, User, Auth) {
+    function FriendsCtrl(Payments, User, Auth, Debts) {
         var vm = this;
 
         vm.searchTerm = "";
@@ -22,9 +23,11 @@
         vm.removeFriend = removeFriend;
         vm.isAlreadyFriend = isAlreadyFriend;
         vm.friends = [];
+        vm.debts = [];
 
         // Load the profile data for the current user
         User.getFriends(Auth.getCurrentUser().id, function (err, data) {
+            console.log(data);
             if (data) {
                 Array.prototype.push.apply(vm.friends, data.friends);
             }
@@ -96,5 +99,5 @@
         }
     }
 
-    FriendsCtrl.$inject = [ "Payments", "User", "Auth" ];
+    FriendsCtrl.$inject = [ "Payments", "User", "Auth", "Debts" ];
 })();

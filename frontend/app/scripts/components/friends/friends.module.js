@@ -15,7 +15,8 @@
             'smart-table',
 
             'app.user',
-            'app.payments'
+            'app.payments',
+            'app.debts'
         ])
         .config(config);
 
